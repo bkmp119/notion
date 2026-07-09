@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>ナレッジ管理の使い方ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terra:#CC785C; --terra-deep:#993C1D; --terra-dark:#4A1B0C;
+  --terra-mid:#D85A30; --terra-soft:#F0997B; --terra-pale:#F5C4B3; --terra-bg:#FAECE7;
+  --cream:#F5F0E8; --cream-line:#E0D8C8; --card:#FFFFFF;
+  --ink:#3A2E28; --ink-soft:#7A6A60;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--cream);color:var(--ink);line-height:1.9;font-size:16px;}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px 80px;}
+
+header{padding:48px 0 32px;text-align:center;}
+.eyebrow{display:inline-block;background:var(--terra-bg);color:var(--terra-deep);font-size:13px;font-weight:500;padding:4px 16px;border-radius:999px;margin-bottom:16px;letter-spacing:.05em;}
+h1{font-size:34px;font-weight:700;color:var(--terra-dark);letter-spacing:.02em;}
+.lead{color:var(--terra-deep);font-size:16px;margin-top:8px;}
+
+nav{position:sticky;top:0;background:rgba(245,240,232,.95);backdrop-filter:blur(4px);z-index:10;padding:10px 0;border-bottom:1px solid var(--cream-line);margin-bottom:40px;}
+nav .wrap{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-bottom:0;}
+nav a{text-decoration:none;font-size:14px;font-weight:500;color:var(--terra-deep);background:var(--card);border:1px solid var(--cream-line);padding:6px 16px;border-radius:999px;transition:.15s;}
+nav a:hover{background:var(--terra);color:#fff;border-color:var(--terra);}
+
+section{margin-bottom:56px;}
+.chapter{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.ch-num{width:44px;height:44px;border-radius:50%;background:var(--terra);color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chapter h2{font-size:24px;font-weight:700;color:var(--terra-dark);}
+.chapter .sub{font-size:13px;color:var(--ink-soft);}
+
+.card{background:var(--card);border-radius:16px;padding:24px 28px;margin-bottom:16px;border:1px solid var(--cream-line);}
+.card h3{font-size:17px;color:var(--terra-deep);margin-bottom:10px;font-weight:700;}
+.note{background:var(--terra-bg);border-radius:12px;padding:14px 20px;font-size:14px;color:var(--terra-dark);margin-top:12px;}
+.note b{color:var(--terra-deep);}
+
+.map{display:grid;gap:12px;}
+.map-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.db{border-radius:12px;padding:16px 18px;border:2px solid var(--terra-pale);background:#FFFDFA;}
+.db .db-name{font-weight:700;font-size:15px;color:var(--terra-dark);margin-bottom:4px;}
+.db .db-desc{font-size:13px;color:var(--ink-soft);line-height:1.7;}
+.db.main{border-color:var(--terra);background:var(--terra-bg);}
+.arrow-mid{text-align:center;color:var(--terra);font-size:13px;font-weight:500;}
+
+.steps{counter-reset:st;display:grid;gap:0;}
+.step{display:flex;gap:16px;position:relative;padding-bottom:20px;}
+.step:last-child{padding-bottom:0;}
+.step::before{counter-increment:st;content:counter(st);width:34px;height:34px;border-radius:50%;background:var(--terra-soft);color:var(--terra-dark);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
+.step:not(:last-child)::after{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--terra-pale);}
+.step .st-body{padding-top:4px;}
+.step .st-title{font-weight:700;font-size:15px;color:var(--terra-dark);}
+.step .st-desc{font-size:14px;color:var(--ink-soft);line-height:1.8;}
+.tag{display:inline-block;background:var(--terra-bg);color:var(--terra-deep);font-size:12px;font-weight:500;padding:1px 10px;border-radius:999px;margin:0 2px;}
+
+.gauge-demo{margin-top:14px;}
+.g-label{display:flex;justify-content:space-between;font-size:13px;color:var(--terra-deep);margin-bottom:4px;font-weight:500;}
+.g-bar{height:12px;background:var(--terra-bg);border-radius:6px;overflow:hidden;margin-bottom:10px;}
+.g-fill{height:100%;background:var(--terra-mid);border-radius:6px;}
+
+.rule{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--cream-line);}
+.rule:last-child{border-bottom:none;}
+.rule .r-icon{font-size:22px;flex-shrink:0;}
+.rule .r-title{font-weight:700;font-size:15px;color:var(--terra-dark);}
+.rule .r-desc{font-size:14px;color:var(--ink-soft);line-height:1.8;}
+
+.qa{font-size:14px;}
+.qa dt{font-weight:700;color:var(--terra-deep);margin-top:12px;}
+.qa dt::before{content:"Q. ";}
+.qa dd{color:var(--ink-soft);margin-left:0;}
+.qa dd::before{content:"A. ";color:var(--terra-mid);font-weight:700;}
+
+footer{text-align:center;font-size:12px;color:var(--ink-soft);padding-top:24px;border-top:1px solid var(--cream-line);}
+@media(max-width:600px){ .map-row{grid-template-columns:1fr;} h1{font-size:26px;} .card{padding:18px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">みんなの知恵を、みんなのものに</span>
+    <h1>ナレッジ管理の使い方ガイド</h1>
+    <p class="lead">5分で読める、このページの歩き方</p>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#map">① 全体マップ</a>
+    <a href="#find">② 探す</a>
+    <a href="#write">③ 書く</a>
+    <a href="#ojt">④ 新人OJT</a>
+    <a href="#rules">⑤ 運用ルール</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<section id="map">
+  <div class="chapter">
+    <div class="ch-num">1</div>
+    <div><h2>全体マップ</h2><div class="sub">どこに何があるか、まずこの一枚</div></div>
+  </div>
+  <div class="card">
+    <div class="map">
+      <div class="db main">
+        <div class="db-name">📚 DB_コンテンツ（マニュアル本体）</div>
+        <div class="db-desc">すべてのナレッジ・マニュアルはここに入っています。困ったらまずここ。「対象職種」「運用場面」「分類」で絞り込めます。</div>
+      </div>
+      <div class="arrow-mid">▲ 分類で整理 ▼ 新人OJTに取り込み</div>
+      <div class="map-row">
+        <div class="db">
+          <div class="db-name">🏷️ DB_データ分類（分類の目次）</div>
+          <div class="db-desc">「外来業務」「在庫管理」など、ナレッジを仕分ける棚のラベル。分類から辿ると目的のマニュアルに早く着きます。</div>
+        </div>
+        <div class="db">
+          <div class="db-name">🎓 新人OJTページ（一人に一冊）</div>
+          <div class="db-desc">新人さん専用の学習チェックリスト。マニュアルを取り込んで、覚えたら✔。進み具合がゲージで見えます。</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">💡 <b>迷ったら「DB_コンテンツ」へ。</b>このテンプレの本棚はひとつだけ。あとは「探しやすくする棚のラベル」と「新人用のチェックリスト」です。</div>
+  </div>
+</section>
+
+<section id="find">
+  <div class="chapter">
+    <div class="ch-num">2</div>
+    <div><h2>ナレッジを探す</h2><div class="sub">3つの入口、どれでも着きます</div></div>
+  </div>
+  <div class="card">
+    <div class="steps">
+      <div class="step"><div class="st-body">
+        <div class="st-title">分類から辿る（おすすめ）</div>
+        <div class="st-desc">DB_データ分類を開き、<span class="tag">外来業務</span><span class="tag">在庫管理</span>などの分類をクリック。その分類に属するナレッジが一覧で出ます。</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">絞り込みで探す</div>
+        <div class="st-desc">DB_コンテンツのビュー上部で「対象職種」や「運用場面」（<span class="tag">新人OJT</span><span class="tag">月次業務</span>）のフィルターを使うと、自分に関係あるものだけに絞れます。</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">キーワード検索</div>
+        <div class="st-desc">Notion左上の🔍検索（ショートカット：Ctrl+P / Cmd+P）にキーワードを入力。ページ名だけでなく本文もヒットします。</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="write">
+  <div class="chapter">
+    <div class="ch-num">3</div>
+    <div><h2>ナレッジを書く・追加する</h2><div class="sub">「あとで誰かが助かる」を1ページに</div></div>
+  </div>
+  <div class="card">
+    <div class="steps">
+      <div class="step"><div class="st-body">
+        <div class="st-title">DB_コンテンツで「＋新規」</div>
+        <div class="st-desc">タイトルは「あとから探す人が打ちそうな言葉」で。例：「レセコン再起動の手順」△「例のアレの対処」✕</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">プロパティを設定</div>
+        <div class="st-desc">「対象職種」「運用場面」を選び、<b>「分類(小)」に必ずひとつ</b>設定します。分類がないと棚に置かれず、誰にも見つけてもらえません。</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">本文を書いて「公開状態」に</div>
+        <div class="st-desc">手順は箇条書きで、写真・スクショは大歓迎。書き終えたらステータス・公開状態を更新して完成です。</div>
+      </div></div>
+    </div>
+    <div class="note">✍️ <b>完璧を目指さない。</b>3行のメモでも、無いよりずっと価値があります。あとから誰でも直せるのがNotionの良いところ。</div>
+  </div>
+</section>
+
+<section id="ojt">
+  <div class="chapter">
+    <div class="ch-num">4</div>
+    <div><h2>新人OJTの進め方</h2><div class="sub">覚えるたびに、ゲージが伸びる</div></div>
+  </div>
+  <div class="card">
+    <h3>🧑‍🏫 教育担当者がやること（最初だけ）</h3>
+    <div class="steps">
+      <div class="step"><div class="st-body">
+        <div class="st-title">OJTテンプレページを複製</div>
+        <div class="st-desc">「新人OJTテンプレ」を複製し、ページ名を「〇〇さんOJT」に変更。中のチェックリストごと新人さん専用になります。</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">マニュアルを「取り込みボタン」で追加</div>
+        <div class="st-desc">DB_コンテンツで覚えてほしいマニュアルの「新人OJT用」ボタンを押すと、新人さんのチェックリストに行が追加されます。</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">各行に「分類カテゴリ」とタイトルを設定</div>
+        <div class="st-desc">追加された行で、マニュアルの分類(小)と同じ「分類カテゴリ」を選び、行のタイトルにマニュアル名を入力します（ここは手作業。ページ内の説明文にも書いてあります）。</div>
+      </div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🌱 新人さんがやること（毎日）</h3>
+    <div class="steps">
+      <div class="step"><div class="st-body">
+        <div class="st-title">上から順にマニュアルを読んで実践</div>
+        <div class="st-desc">チェックリストのリンクからマニュアルへ飛べます。わからない事はメモ欄に残してOK。</div>
+      </div></div>
+      <div class="step"><div class="st-body">
+        <div class="st-title">できるようになったら ✔ ボタン</div>
+        <div class="st-desc">✔を押すと完了日が自動で入り、その分類のゲージが伸びます。</div>
+      </div></div>
+    </div>
+    <div class="gauge-demo">
+      <div class="g-label"><span>外来業務</span><span>80%</span></div>
+      <div class="g-bar"><div class="g-fill" style="width:80%"></div></div>
+      <div class="g-label"><span>在庫管理</span><span>50%</span></div>
+      <div class="g-bar"><div class="g-fill" style="width:50%"></div></div>
+      <div class="g-label"><span>処方入力</span><span>25%</span></div>
+      <div class="g-bar"><div class="g-fill" style="width:25%"></div></div>
+    </div>
+    <div class="note">🎉 <b>ゲージは「分類別ゲージ」ギャラリーで見られます。</b>全部100%になった日が、ひとり立ちの日。</div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="chapter">
+    <div class="ch-num">5</div>
+    <div><h2>運用ルール（約束事）</h2><div class="sub">これだけ守れば、ずっと使える</div></div>
+  </div>
+  <div class="card">
+    <div class="rule">
+      <div class="r-icon">🏷️</div>
+      <div>
+        <div class="r-title">新しい分類を作ったら、2か所に登録する</div>
+        <div class="r-desc">分類は「DB_データ分類」と「在籍中の新人さんのゲージ用DB」の2か所にあります。片方に追加したら、<b>もう片方にも同じ名前で手動追加</b>してください（自動では同期されません）。</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="r-icon">✏️</div>
+      <div>
+        <div class="r-title">OJTチェックリストの行タイトルは手で入れる</div>
+        <div class="r-desc">取り込み直後の行は名前が空です。空のままだと「新規ページ」と表示されて分からなくなるので、マニュアル名を入力してください。</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="r-icon">🗑️</div>
+      <div>
+        <div class="r-title">「非表示(消さない)」と書いてある項目は消さない</div>
+        <div class="r-desc">ゲージの計算に使われている裏方の項目です。名前のとおり、そっとしておいてください。</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="r-icon">🔄</div>
+      <div>
+        <div class="r-title">古くなったナレッジは「直す or 印を付ける」</div>
+        <div class="r-desc">間違いを見つけた人がその場で直すのが基本。自信がなければコメントを残すだけでも十分です。</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>❓ よくある質問</h3>
+    <dl class="qa">
+      <dt>間違えて✔を押してしまった</dt>
+      <dd>その行の「完了日」を空欄に戻せばゲージも元に戻ります。</dd>
+      <dt>どの分類に入れるか迷う</dt>
+      <dd>いちばん近いものをひとつ選べばOK。完璧な分類より「入っていること」が大事です。</dd>
+      <dt>マニュアルを消してしまったかも</dt>
+      <dd>Notionはゴミ箱（サイドバー最下部）から復元できます。慌てなくて大丈夫。</dd>
+    </dl>
+  </div>
+</section>
+
+<footer>ナレッジ管理テンプレート 使い方ガイド</footer>
+
+</div>
+</body>
+</html>
