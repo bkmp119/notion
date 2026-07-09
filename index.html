@@ -125,10 +125,16 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .option .badge{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.18em;color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:4px 14px;margin-bottom:20px;text-transform:uppercase;}
 
 /* hero flow animation */
-.flow{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:50px;flex-wrap:nowrap;}
-.fstation{display:flex;flex-direction:column;align-items:center;gap:11px;}
+.flowwrap{position:relative;display:inline-block;margin-top:50px;padding-bottom:52px;}
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;}
+.fstation{display:flex;flex-direction:column;align-items:center;gap:11px;position:relative;}
 .flabel{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--ink-3);}
 .fbox{width:98px;height:74px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.7);position:relative;display:flex;align-items:center;justify-content:center;padding:10px;backdrop-filter:blur(2px);}
+/* 育てる: falling knowledge tags */
+.fseed{position:absolute;top:-16px;left:0;width:98px;display:flex;justify-content:center;pointer-events:none;}
+.fseed span{position:absolute;white-space:nowrap;font-size:9px;font-weight:600;letter-spacing:.06em;padding:2px 9px;border-radius:999px;background:#fff;border:1px solid var(--accent);color:var(--accent-deep);opacity:0;animation:seed 7.8s ease infinite;}
+.fseed span:nth-child(2){animation-delay:3.9s;}
+@keyframes seed{0%,100%{opacity:0;transform:translateY(-10px);}7%{opacity:1;transform:translateY(0);}20%{opacity:1;transform:translateY(2px);}30%{opacity:0;transform:translateY(22px) scale(.72);}}
 /* 書く: typing doc */
 .fdoc{width:100%;display:flex;flex-direction:column;gap:7px;}
 .fdoc i{height:7px;border-radius:2px;background:var(--line);display:block;}
@@ -157,6 +163,12 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .fconn i:nth-child(2){animation:travel 1.95s linear infinite .65s;}
 .fconn i:nth-child(3){animation:travel 1.95s linear infinite 1.3s;}
 @keyframes travel{0%{left:0;opacity:0;}25%{opacity:1;}75%{opacity:1;}100%{left:36px;opacity:0;}}
+/* return loop: 活用する → 育てる */
+.floop{position:absolute;left:24px;right:24px;bottom:16px;height:34px;overflow:visible;}
+.floop path{fill:none;stroke:var(--accent);stroke-width:1.3;stroke-dasharray:4 6;stroke-linecap:round;opacity:.65;animation:loopdash 1.6s linear infinite;}
+.floop .fl-arrow{fill:var(--accent);stroke:none;opacity:.8;animation:none;}
+@keyframes loopdash{to{stroke-dashoffset:-10;}}
+.floop-label{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--accent-deep);opacity:.85;}
 
 /* scroll reveal */
 .reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .75s ease, transform .75s cubic-bezier(.2,.75,.2,1);}
@@ -171,12 +183,14 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .gz-fill{height:100%;background:var(--accent);border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.2,.75,.2,1);}
 
 @media(prefers-reduced-motion:reduce){
-  .fdoc i,.fstack i.grow,.fbox.db::after,.fchips span,.fconn i{animation:none !important;}
+  .fdoc i,.fstack i.grow,.fbox.db::after,.fchips span,.fconn i,.fseed span,.floop path{animation:none !important;}
+  .fseed span:nth-child(1){opacity:.9;transform:none;}
   .fconn i{opacity:.6;}
   .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 @media(max-width:600px){
-  .flow{gap:4px;transform:scale(.86);}
+  .flowwrap{transform:scale(.86);transform-origin:top center;}
+  .flow{gap:4px;}
 }
 
 footer{text-align:center;font-size:12px;color:var(--ink-3);padding:56px 0 72px;letter-spacing:.02em;}
@@ -188,7 +202,7 @@ footer a{color:var(--accent-deep);text-decoration:none;}
   .kicker{margin-bottom:16px;}
   header::before{top:-120px;height:420px;}
   .lead{margin-top:16px;}
-  .flow{margin-top:28px;}
+  .flowwrap{margin-top:34px;}
   section{padding:56px 0;} .head h2{font-size:24px;}
   .card{padding:26px 24px;} .map-row{grid-template-columns:1fr;}
 }
@@ -201,21 +215,29 @@ footer a{color:var(--accent-deep);text-decoration:none;}
   <div class="wrap">
     <h1 class="serif"><span class="nlogo" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.186c-.093-.187 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.407-1.632z"/></svg></span>ナレッジ管理の<br>使い方ガイド</h1>
     <p class="lead">店舗ナレッジを、店舗で育て、積み上げ、活用していく。</p>
-    <div class="flow" aria-hidden="true">
-      <div class="fstation">
-        <div class="fbox"><div class="fdoc"><i></i><i></i><i></i></div></div>
-        <div class="flabel">書く</div>
+    <div class="flowwrap" aria-hidden="true">
+      <div class="flow">
+        <div class="fstation">
+          <div class="fseed"><span>マニュアル</span><span>ノウハウ</span></div>
+          <div class="fbox"><div class="fdoc"><i></i><i></i><i></i></div></div>
+          <div class="flabel">育てる</div>
+        </div>
+        <div class="fconn"><i></i><i></i><i></i></div>
+        <div class="fstation">
+          <div class="fbox db"><div class="fstack"><i></i><i></i><i></i><i class="grow"></i></div></div>
+          <div class="flabel">積み上げ</div>
+        </div>
+        <div class="fconn"><i></i><i></i><i></i></div>
+        <div class="fstation">
+          <div class="fbox"><div class="fchips"><span>薬剤師</span><span>医療事務</span><span>新人</span></div></div>
+          <div class="flabel">活用する</div>
+        </div>
       </div>
-      <div class="fconn"><i></i><i></i><i></i></div>
-      <div class="fstation">
-        <div class="fbox db"><div class="fstack"><i></i><i></i><i></i><i class="grow"></i></div></div>
-        <div class="flabel">貯まる</div>
-      </div>
-      <div class="fconn"><i></i><i></i><i></i></div>
-      <div class="fstation">
-        <div class="fbox"><div class="fchips"><span>薬剤師</span><span>医療事務</span><span>新人</span></div></div>
-        <div class="flabel">活きる</div>
-      </div>
+      <svg class="floop" viewBox="0 0 300 34" preserveAspectRatio="none">
+        <path d="M295 2 C 288 30, 12 30, 8 6"/>
+        <path class="fl-arrow" d="M8 6 L14.5 8.5 L10.5 1.5 Z"/>
+      </svg>
+      <div class="floop-label">更新して、また育てる</div>
     </div>
   </div>
 </header>
