@@ -7,300 +7,587 @@
 <title>ナレッジ管理の使い方ガイド</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0;padding:0;font-family:'Noto Sans JP',sans-serif;background:#FAF6F0;-webkit-font-smoothing:antialiased;}
-  a{color:#8A4527;}
-  a:hover{color:#5A2C15;}
-  .db-link{text-decoration:none;transition:.18s;}
-  .db-link:hover{box-shadow:0 3px 12px rgba(140,69,39,.10);transform:translateY(-1px);}
-  .nav-link:hover{background:#F6E9E1;color:#8A4527 !important;}
+:root{
+  --bg:#FBFAF8;
+  --ink:#1B1A18; --ink-2:#57524C; --ink-3:#98918A;
+  --line:#EAE6DF; --line-2:#F1EEE8;
+  --accent:#B4643E; --accent-deep:#8A4527;
+  --accent-soft:#F5ECE5;
+  --surface:#FFFFFF;
+  --tint:#F6F4EF;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.9;font-size:15px;-webkit-font-smoothing:antialiased;letter-spacing:.01em;}
+.serif{font-family:'Noto Serif JP',serif;}
+.wrap{max-width:760px;margin:0 auto;padding:0 28px;}
+
+/* header */
+header{position:relative;padding:132px 0 76px;text-align:center;overflow:hidden;}
+header::before{content:"";position:absolute;top:-180px;left:50%;transform:translate(-50%, var(--orb,0px));width:680px;height:520px;
+  background:radial-gradient(ellipse at center, rgba(216,138,92,.28) 0%, rgba(216,138,92,.10) 38%, rgba(216,138,92,0) 70%);
+  pointer-events:none;z-index:0;filter:blur(6px);will-change:transform;}
+header .wrap{position:relative;z-index:1;}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.32em;color:var(--accent);text-transform:uppercase;margin-bottom:30px;}
+.kicker::before,.kicker::after{content:"";width:20px;height:1px;background:var(--accent);opacity:.5;}
+h1{font-family:'Noto Serif JP',serif;font-size:52px;font-weight:600;color:var(--ink);letter-spacing:-.005em;line-height:1.3;}
+.lead{color:var(--ink-2);font-size:15.5px;margin-top:24px;font-weight:400;letter-spacing:.03em;}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(251,250,248,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-2);}
+nav .wrap{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;padding-top:13px;padding-bottom:13px;}
+nav a{text-decoration:none;font-size:12.5px;font-weight:500;color:var(--ink-3);padding:5px 13px;border-radius:8px;transition:.18s;letter-spacing:.02em;}
+nav a:hover{color:var(--ink);background:var(--tint);}
+nav a.active{color:var(--accent-deep);background:var(--accent-soft);}
+
+/* reading progress */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-deep));z-index:60;transition:width .12s linear;}
+
+/* section */
+section{padding:80px 0;border-top:1px solid var(--line-2);}
+section:first-of-type{border-top:none;padding-top:24px;}
+.head{margin-bottom:44px;}
+.num{display:inline-flex;align-items:center;gap:9px;font-family:'Noto Serif JP',serif;font-size:13px;font-weight:500;color:var(--accent);letter-spacing:.24em;margin-bottom:16px;}
+.num::before{content:"/";font-weight:600;opacity:.55;}
+.head h2{font-family:'Noto Serif JP',serif;font-size:31px;font-weight:600;color:var(--ink);letter-spacing:-.005em;line-height:1.4;}
+.head .sub{font-size:13.5px;color:var(--ink-3);margin-top:11px;}
+
+/* card */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 38px;margin-bottom:16px;}
+.card h3{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:.01em;}
+.card p{font-size:14.5px;color:var(--ink-2);margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.card b{color:var(--ink);font-weight:700;}
+.card ul{list-style:none;margin:4px 0;padding:0;}
+.card ul li{font-size:14.5px;color:var(--ink-2);padding-left:20px;position:relative;margin-bottom:8px;}
+.card ul li::before{content:"";position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--accent);}
+
+/* callout */
+.callout{background:var(--tint);border-radius:12px;padding:18px 22px;font-size:13.5px;color:var(--ink-2);margin-top:22px;line-height:1.85;}
+.callout b{color:var(--ink);}
+
+/* compare rows */
+.cmp{background:var(--tint);border-radius:12px;padding:20px 24px;margin-bottom:20px;}
+.cmp .row{display:flex;gap:12px;align-items:baseline;}
+.cmp .row + .row{margin-top:12px;}
+.cmp .mark{font-size:15px;font-weight:700;flex-shrink:0;width:18px;}
+.cmp .no{color:var(--ink-3);}
+.cmp .yes{color:var(--accent);}
+.cmp .row span:last-child{font-size:14.5px;color:var(--ink-2);}
+
+/* db map */
+.map{display:grid;gap:14px;}
+.db{border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:var(--surface);text-decoration:none;display:block;transition:.18s;}
+a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
+.db.main{border-color:var(--accent);background:var(--accent-soft);}
+.db .db-name{font-weight:700;font-size:14.5px;color:var(--ink);margin-bottom:6px;display:flex;align-items:flex-start;gap:8px;}
+.db .db-open{font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--accent);margin-left:auto;white-space:nowrap;flex-shrink:0;padding-top:2px;}
+.db .db-desc{font-size:13px;color:var(--ink-2);line-height:1.8;}
+.map-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.map-arrow{text-align:center;color:var(--ink-3);font-size:11.5px;font-weight:500;letter-spacing:.04em;padding:4px 0;}
+
+/* steps */
+.steps{display:grid;gap:0;}
+.step{display:flex;gap:20px;position:relative;padding-bottom:26px;}
+.step:last-child{padding-bottom:0;}
+.step .st-n{font-family:'Noto Serif JP',serif;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--accent);color:var(--accent-deep);font-weight:500;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
+.step:not(:last-child)::after{content:"";position:absolute;left:15px;top:30px;bottom:0;width:1px;background:var(--line);}
+.step .st-title{font-weight:700;font-size:14.5px;color:var(--ink);margin-top:3px;}
+.step .st-desc{font-size:13.5px;color:var(--ink-2);line-height:1.85;margin-top:4px;}
+.tag{display:inline-block;background:var(--tint);color:var(--ink-2);font-size:11.5px;font-weight:500;padding:2px 9px;border-radius:6px;margin:0 1px;border:1px solid var(--line);}
+
+/* status flow */
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.flow .p{font-size:12px;font-weight:600;padding:4px 13px;border-radius:999px;background:var(--tint);color:var(--ink-2);border:1px solid var(--line);}
+.flow .p.on{background:var(--accent-soft);color:var(--accent-deep);border-color:var(--accent);}
+.flow .arw{color:var(--ink-3);font-size:12px;}
+
+/* rules */
+.rule{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--line-2);}
+.rule:first-child{padding-top:0;}
+.rule:last-child{border-bottom:none;padding-bottom:0;}
+.rule .ic{font-size:17px;flex-shrink:0;line-height:1.6;filter:grayscale(.15);}
+.rule .r-title{font-weight:700;font-size:14.5px;color:var(--ink);}
+.rule .r-desc{font-size:13.5px;color:var(--ink-2);line-height:1.85;margin-top:2px;}
+
+/* qa */
+.qa dt{font-weight:700;color:var(--ink);margin-top:20px;font-size:14px;display:flex;gap:10px;}
+.qa dt:first-of-type{margin-top:0;}
+.qa dt .q{font-family:'Noto Serif JP',serif;color:var(--accent);flex-shrink:0;}
+.qa dd{color:var(--ink-2);font-size:13.5px;margin-top:5px;padding-left:24px;}
+
+/* option section */
+.option{background:var(--tint);border-top:1px solid var(--line);}
+.option .badge{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.18em;color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:4px 14px;margin-bottom:20px;text-transform:uppercase;}
+
+/* hero flow animation */
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:50px;flex-wrap:nowrap;}
+.fstation{display:flex;flex-direction:column;align-items:center;gap:11px;}
+.flabel{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--ink-3);}
+.fbox{width:98px;height:74px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.7);position:relative;display:flex;align-items:center;justify-content:center;padding:10px;backdrop-filter:blur(2px);}
+/* 書く: typing doc */
+.fdoc{width:100%;display:flex;flex-direction:column;gap:7px;}
+.fdoc i{height:7px;border-radius:2px;background:var(--line);display:block;}
+.fdoc i:nth-child(1){width:80%;animation:type 3.9s ease infinite;}
+.fdoc i:nth-child(2){width:100%;animation:type 3.9s ease infinite .5s;}
+.fdoc i:nth-child(3){width:60%;animation:type 3.9s ease infinite 1s;}
+@keyframes type{0%,100%{background:var(--line);}30%,55%{background:var(--accent);}}
+/* 貯まる: accumulating stack */
+.fstack{display:flex;flex-direction:column-reverse;gap:4px;align-items:center;}
+.fstack i{width:62px;height:9px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--accent);display:block;}
+.fstack i.grow{animation:add 3.9s ease-in-out infinite;}
+@keyframes add{0%{opacity:0;transform:translateY(-16px);}22%{opacity:1;transform:translateY(0);}100%{opacity:1;transform:translateY(0);}}
+.fbox.db::after{content:"";position:absolute;inset:-1px;border-radius:13px;border:1.5px solid var(--accent);opacity:0;animation:ring 3.9s ease-in-out infinite;}
+@keyframes ring{0%,18%{opacity:0;transform:scale(1);}26%{opacity:.55;transform:scale(1.04);}45%{opacity:0;transform:scale(1.08);}100%{opacity:0;}}
+/* 活きる: chips lighting */
+.fchips{display:flex;flex-direction:column;gap:5px;width:100%;}
+.fchips span{font-size:9.5px;font-weight:600;text-align:center;padding:3px 0;border-radius:5px;background:#fff;border:1px solid var(--line);color:var(--ink-3);}
+.fchips span:nth-child(1){animation:lit 3.9s ease infinite 1.4s;}
+.fchips span:nth-child(2){animation:lit 3.9s ease infinite 1.75s;}
+.fchips span:nth-child(3){animation:lit 3.9s ease infinite 2.1s;}
+@keyframes lit{0%,55%,100%{background:#fff;color:var(--ink-3);border-color:var(--line);}68%,88%{background:var(--accent-soft);color:var(--accent-deep);border-color:var(--accent);}}
+/* connectors */
+.fconn{position:relative;width:40px;height:12px;flex-shrink:0;}
+.fconn i{position:absolute;top:4px;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:0;}
+.fconn i:nth-child(1){animation:travel 1.95s linear infinite;}
+.fconn i:nth-child(2){animation:travel 1.95s linear infinite .65s;}
+.fconn i:nth-child(3){animation:travel 1.95s linear infinite 1.3s;}
+@keyframes travel{0%{left:0;opacity:0;}25%{opacity:1;}75%{opacity:1;}100%{left:36px;opacity:0;}}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .75s ease, transform .75s cubic-bezier(.2,.75,.2,1);}
+.reveal.rl{transform:translateX(-30px);}
+.reveal.rr{transform:translateX(30px);}
+.reveal.in{opacity:1;transform:none;}
+
+/* animated gauge */
+.gz-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-2);margin-bottom:6px;font-weight:500;}
+.gz-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:14px;}
+.gz-bar:last-of-type{margin-bottom:0;}
+.gz-fill{height:100%;background:var(--accent);border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.2,.75,.2,1);}
+
+@media(prefers-reduced-motion:reduce){
+  .fdoc i,.fstack i.grow,.fbox.db::after,.fchips span,.fconn i{animation:none !important;}
+  .fconn i{opacity:.6;}
+  .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+@media(max-width:600px){
+  .flow{gap:4px;transform:scale(.86);}
+}
+
+footer{text-align:center;font-size:12px;color:var(--ink-3);padding:56px 0 72px;letter-spacing:.02em;}
+footer a{color:var(--accent-deep);text-decoration:none;}
+
+@media(max-width:600px){
+  .wrap{padding:0 20px;}
+  header{padding:72px 0 48px;} h1{font-size:29px;}
+  section{padding:56px 0;} .head h2{font-size:24px;}
+  .card{padding:26px 24px;} .map-row{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
+<div id="progress"></div>
 
-<div style="max-width:820px;margin:0 auto;padding:0 22px;color:#2C2825;line-height:1.85;font-size:15.5px;">
+<header>
+  <div class="wrap">
+    <div class="kicker">Knowledge Base</div>
+    <h1 class="serif">ナレッジ管理の<br>使い方ガイド</h1>
+    <p class="lead">店舗ナレッジを、店舗で育て、積み上げ、活用していく。</p>
+    <div class="flow" aria-hidden="true">
+      <div class="fstation">
+        <div class="fbox"><div class="fdoc"><i></i><i></i><i></i></div></div>
+        <div class="flabel">書く</div>
+      </div>
+      <div class="fconn"><i></i><i></i><i></i></div>
+      <div class="fstation">
+        <div class="fbox db"><div class="fstack"><i></i><i></i><i></i><i class="grow"></i></div></div>
+        <div class="flabel">貯まる</div>
+      </div>
+      <div class="fconn"><i></i><i></i><i></i></div>
+      <div class="fstation">
+        <div class="fbox"><div class="fchips"><span>薬剤師</span><span>医療事務</span><span>新人</span></div></div>
+        <div class="flabel">活きる</div>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <header style="padding:64px 0 40px;text-align:center;">
-    <h1 style="font-family:'Noto Serif JP',serif;font-size:33px;font-weight:700;color:#5A2C15;letter-spacing:.02em;line-height:1.4;margin:0;">ナレッジ管理の使い方ガイド</h1>
-    <p style="color:#5F564E;font-size:15px;margin-top:14px;">店舗ナレッジを　店舗で育て、積み上げ、活用していく</p>
-  </header>
+<nav>
+  <div class="wrap">
+    <a href="#concept">コンセプト</a>
+    <a href="#map">全体マップ</a>
+    <a href="#find">探す</a>
+    <a href="#write">書く・追加</a>
+    <a href="#rules">運用ルール</a>
+    <a href="#ojt">おまけ・新人OJT</a>
+  </div>
+</nav>
 
-  <nav style="position:sticky;top:0;z-index:20;background:rgba(250,246,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid #EFE7DA;margin:0 -22px;">
-    <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:11px 22px;">
-      <a class="nav-link" href="#concept" style="text-decoration:none;font-size:13px;font-weight:500;color:#5F564E;padding:6px 14px;border-radius:999px;">コンセプト</a>
-      <a class="nav-link" href="#map" style="text-decoration:none;font-size:13px;font-weight:500;color:#5F564E;padding:6px 14px;border-radius:999px;">全体マップ</a>
-      <a class="nav-link" href="#find" style="text-decoration:none;font-size:13px;font-weight:500;color:#5F564E;padding:6px 14px;border-radius:999px;">探す</a>
-      <a class="nav-link" href="#write" style="text-decoration:none;font-size:13px;font-weight:500;color:#5F564E;padding:6px 14px;border-radius:999px;">書く・追加</a>
-      <a class="nav-link" href="#rules" style="text-decoration:none;font-size:13px;font-weight:500;color:#5F564E;padding:6px 14px;border-radius:999px;">運用ルール</a>
-      <a class="nav-link" href="#ojt" style="text-decoration:none;font-size:13px;font-weight:500;color:#5F564E;padding:6px 14px;border-radius:999px;">おまけ・新人OJT</a>
-    </div>
-  </nav>
+<div class="wrap">
 
-  <section id="concept" style="padding:52px 0;">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;">
-      <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;color:#B4643E;letter-spacing:.1em;flex-shrink:0;padding-top:2px;">00</div>
-      <div>
-        <h2 style="font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:#5A2C15;margin:0;">コンセプト</h2>
-        <div style="font-size:13px;color:#8B8177;margin-top:3px;">このテンプレートの考え方</div>
-      </div>
+<section id="concept">
+  <div class="head">
+    <div class="num">00</div>
+    <h2 class="serif">コンセプト</h2>
+    <div class="sub">このテンプレートの考え方</div>
+  </div>
+  <div class="card">
+    <h3>このテンプレートって何？</h3>
+    <p>この業務どうやるのだっけ？ マニュアルはどこ？ いつの？ どれが正しい？</p>
+    <p>教える人によって、新人教育の内容もバラバラ…</p>
+    <p>毎日の業務、新人教育などの場面における社内業務の問題解決のために作りました。</p>
+  </div>
+  <div class="card">
+    <h3>店舗ナレッジを、店舗で育て、積み上げ、活用していく</h3>
+    <p>店舗ナレッジを次の2つに分類します。</p>
+    <ul>
+      <li><b>マニュアル</b> ―「こうやる」を明文化する</li>
+      <li><b>ノウハウ</b> ―「こうするとうまくいく」情報資産・知恵を共有する</li>
+    </ul>
+    <p>店舗ごとに業務や手順が異なる業務が多く存在します。共同編集ではなく、<b>店舗ごとに複製</b>して自分たちのナレッジを育てましょう。成果物（ページコンテンツ）を共有していくことも可能です。</p>
+  </div>
+  <div class="card">
+    <h3>運用の考え方</h3>
+    <div class="cmp">
+      <div class="row"><span class="mark no">×</span><span>時間をかけて分厚いマニュアルを作る</span></div>
+      <div class="row"><span class="mark yes">○</span><span><b>短時間で使える</b>マニュアルを作成し、すぐ見られて、すぐ直せる状態に</span></div>
     </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <h3 style="font-family:'Noto Serif JP',serif;font-size:19px;font-weight:700;color:#5A2C15;margin-bottom:14px;">このテンプレートって何？</h3>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">この業務どうやるのだっけ？マニュアルはどこ？ いつの？ どれが正しい？</p>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">教える人によって、新人教育の内容もバラバラ…</p>
-      <p style="font-size:14.5px;color:#5F564E;">毎日の業務、新人教育などの場面における社内業務の問題解決のために作りました。</p>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <h3 style="font-family:'Noto Serif JP',serif;font-size:19px;font-weight:700;color:#5A2C15;margin-bottom:14px;">店舗ナレッジを　店舗で育て、積み上げ、活用していく</h3>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">店舗ナレッジを次の２つに分類</p>
-      <ul style="font-size:14.5px;color:#5F564E;margin:0 0 10px 0;padding-left:20px;line-height:1.9;">
-        <li><b style="color:#5A2C15;">マニュアル</b> ―「こうやる」を明文化する</li>
-        <li><b style="color:#5A2C15;">ノウハウ</b> ―「こうするとうまくいく」「情報資産」「知恵」を共有する</li>
-      </ul>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">店舗ごとに業務や手順が異なる業務が多く存在します。</p>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">共同編集ではなく、<b style="color:#5A2C15;">店舗ごとに複製</b>して自分たちのナレッジ <i>Knowledge</i> を育てましょう。</p>
-      <p style="font-size:14.5px;color:#5F564E;">成果物(ページコンテンツ)を共有していくことも可能</p>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <h3 style="font-family:'Noto Serif JP',serif;font-size:19px;font-weight:700;color:#5A2C15;margin-bottom:14px;">運用の考え方</h3>
-      <div style="background:#F3ECE2;border-radius:10px;padding:16px 20px;margin-bottom:16px;">
-        <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:10px;">
-          <span style="color:#A23B4A;font-weight:700;">×</span>
-          <span style="font-size:14.5px;color:#5F564E;">時間をかけて分厚いマニュアルを作る</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:baseline;">
-          <span style="color:#6E7A5E;font-weight:700;">○</span>
-          <span style="font-size:14.5px;color:#5F564E;"><b style="color:#5A2C15;">短時間で使える</b>マニュアルを作成、すぐ見られて、すぐ直せる状態に</span>
-        </div>
-      </div>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">一番大変な「仕組み作り」はもう完成しています。</p>
-      <p style="font-size:14.5px;color:#5F564E;margin-bottom:10px;">あなたがやるのは、中身を作るだけ。</p>
-      <ul style="font-size:14.5px;color:#5F564E;margin:0;padding-left:20px;line-height:1.9;">
-        <li><b style="color:#5A2C15;">STEP1</b> まずは、店舗にあるPDFを貼るだけでもOK</li>
-        <li><b style="color:#5A2C15;">STEP2</b> 慣れたら、AIに要点を渡してマニュアル化</li>
-      </ul>
-    </div>
-  </section>
+    <p>一番大変な「仕組み作り」はもう完成しています。あなたがやるのは、中身を作るだけ。</p>
+    <ul>
+      <li><b>STEP 1</b>　まずは、店舗にあるPDFを貼るだけでもOK</li>
+      <li><b>STEP 2</b>　慣れたら、AIに要点を渡してマニュアル化</li>
+    </ul>
+  </div>
+</section>
 
-  <section id="map" style="padding:52px 0;border-top:1px solid #EFE7DA;">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;">
-      <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;color:#B4643E;letter-spacing:.1em;flex-shrink:0;padding-top:2px;">01</div>
-      <div>
-        <h2 style="font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:#5A2C15;margin:0;">全体マップ</h2>
-        <div style="font-size:13px;color:#8B8177;margin-top:3px;">どこに何があるか、まずこの一枚</div>
-      </div>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <div style="display:grid;gap:12px;">
-        <a class="db-link" href="https://app.notion.com/p/2011e4a02fe38358b07001e752dd2048" target="_blank" rel="noopener" style="border-radius:12px;padding:18px 20px;border:1.5px solid #B4643E;background:#F6E9E1;display:block;">
-          <div style="font-weight:700;font-size:15px;color:#5A2C15;margin-bottom:5px;display:flex;align-items:flex-start;gap:6px;">📚 DB_店舗ナレッジ（本体）<span style="font-size:11px;font-weight:500;color:#B4643E;border:1px solid #EAD3C6;border-radius:999px;padding:1px 9px;margin-left:auto;white-space:nowrap;">開く ↗</span></div>
-          <div style="font-size:13px;color:#5F564E;line-height:1.75;">すべてのマニュアル・ナレッジはここに入っています。困ったらまずここ。「対象職種」や「分類」で絞り込んで探せます。</div>
-        </a>
-        <div style="text-align:center;color:#B4643E;font-size:12px;font-weight:500;padding:2px 0;">▲ 分類でひもづけ ／ ▼ 新人OJTに取り込み</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <a class="db-link" href="https://app.notion.com/p/9391e4a02fe38242918c018bc3bcd73a" target="_blank" rel="noopener" style="border-radius:12px;padding:18px 20px;border:1px solid #EAD3C6;background:#FFFDFB;display:block;">
-            <div style="font-weight:700;font-size:15px;color:#5A2C15;margin-bottom:5px;display:flex;align-items:flex-start;gap:6px;">🏷️ DB_情報分類<span style="font-size:11px;font-weight:500;color:#B4643E;border:1px solid #EAD3C6;border-radius:999px;padding:1px 9px;margin-left:auto;white-space:nowrap;">開く ↗</span></div>
-            <div style="font-size:13px;color:#5F564E;line-height:1.75;">「外来業務」「在庫管理」などのラベル（棚）を管理する目次。ナレッジはここの分類にひもづきます。</div>
-          </a>
-          <a class="db-link" href="https://app.notion.com/p/3851e4a02fe381cb9df9d0035cffa253" target="_blank" rel="noopener" style="border-radius:12px;padding:18px 20px;border:1px solid #EAD3C6;background:#FFFDFB;display:block;">
-            <div style="font-weight:700;font-size:15px;color:#5A2C15;margin-bottom:5px;display:flex;align-items:flex-start;gap:6px;">🎓 新人OJT管理<span style="font-size:11px;font-weight:500;color:#B4643E;border:1px solid #EAD3C6;border-radius:999px;padding:1px 9px;margin-left:auto;white-space:nowrap;">開く ↗</span></div>
-            <div style="font-size:13px;color:#5F564E;line-height:1.75;">新人教育のチェックリスト。<b>使う店舗だけ</b>の任意機能です（→ おまけ参照）。</div>
-          </a>
-        </div>
-      </div>
-      <div style="background:#F6E9E1;border-radius:10px;padding:14px 18px;font-size:13.5px;color:#5A2C15;margin-top:16px;line-height:1.75;">💡 <b style="color:#8A4527;">迷ったら「DB_店舗ナレッジ」へ。</b>本棚はこのひとつだけ。あとは「探しやすくする棚のラベル（DB_情報分類）」と、店舗によって使う「新人用チェックリスト」です。</div>
-    </div>
-  </section>
-
-  <section id="find" style="padding:52px 0;border-top:1px solid #EFE7DA;">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;">
-      <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;color:#B4643E;letter-spacing:.1em;flex-shrink:0;padding-top:2px;">02</div>
-      <div>
-        <h2 style="font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:#5A2C15;margin:0;">ナレッジを探す</h2>
-        <div style="font-size:13px;color:#8B8177;margin-top:3px;">3つの入口、どれでも着きます</div>
-      </div>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <div style="display:grid;gap:0;">
-        <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #B4643E;color:#8A4527;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">1</div>
-          <div>
-            <div style="font-weight:700;font-size:14.5px;color:#5A2C15;">分類から辿る（おすすめ）</div>
-            <div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;"><b>DB_情報分類</b>の「カテゴリ別」ビューを開くと、<span style="display:inline-block;background:#EDF0E6;color:#6E7A5E;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">ノウハウ</span><span style="display:inline-block;background:#EDF0E6;color:#6E7A5E;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">マニュアル</span>の大分類ごとに<span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">外来業務</span><span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">在庫管理</span>などの小分類が並びます。分類をクリックすると、そこに属するナレッジ一覧に辿れます。</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #B4643E;color:#8A4527;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">2</div>
-          <div>
-            <div style="font-weight:700;font-size:14.5px;color:#5A2C15;">絞り込みで探す</div>
-            <div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;"><b>DB_店舗ナレッジ</b>の「一覧（検索用）」で、「対象職種」（<span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">薬剤師</span><span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">医療事務</span>）や「公開状態」でフィルターすると、自分に関係あるものだけに絞れます。</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:18px;position:relative;padding-bottom:0;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #B4643E;color:#8A4527;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">3</div>
-          <div>
-            <div style="font-weight:700;font-size:14.5px;color:#5A2C15;">キーワード検索</div>
-            <div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">Notion左上の🔍検索（ショートカット <span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">Ctrl+P</span> / <span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">⌘+P</span>）にキーワードを入力。ページ名だけでなく本文もヒットします。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="write" style="padding:52px 0;border-top:1px solid #EFE7DA;">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;">
-      <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;color:#B4643E;letter-spacing:.1em;flex-shrink:0;padding-top:2px;">03</div>
-      <div>
-        <h2 style="font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:#5A2C15;margin:0;">ナレッジを書く・追加する</h2>
-        <div style="font-size:13px;color:#8B8177;margin-top:3px;">「あとで誰かが助かる」を1ページに</div>
-      </div>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <div style="display:grid;gap:0;">
-        <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #B4643E;color:#8A4527;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">1</div>
-          <div>
-            <div style="font-weight:700;font-size:14.5px;color:#5A2C15;">DB_店舗ナレッジで「＋新規」</div>
-            <div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">用途に合うテンプレを選ぶと下書きが楽です：<span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">マニュアル</span><span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">薬学的介入</span><span style="display:inline-block;background:#F3ECE2;color:#8A4527;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">ヒヤリハット事例</span>。タイトルは「あとから探す人が打ちそうな言葉」で。<br>例）「レセコン再起動の手順」○ ／「例のアレの対処」✕</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #B4643E;color:#8A4527;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">2</div>
-          <div>
-            <div style="font-weight:700;font-size:14.5px;color:#5A2C15;">プロパティを設定</div>
-            <div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">「対象職種」を選び、<b>「分類(小)」に必ずひとつ</b>ひもづけます。分類がないと棚に置かれず、誰にも見つけてもらえません。</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:18px;position:relative;padding-bottom:0;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #B4643E;color:#8A4527;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">3</div>
-          <div>
-            <div style="font-weight:700;font-size:14.5px;color:#5A2C15;">本文を書いて「公開状態」を進める</div>
-            <div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">手順は箇条書きで、写真・スクショは大歓迎。書き上がりに合わせて公開状態を進めます。</div>
-            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;">
-              <span style="font-size:12.5px;font-weight:600;padding:4px 14px;border-radius:999px;background:#F7E2E4;color:#A23B4A;">要対応</span><span style="color:#B4643E;font-size:13px;">→</span>
-              <span style="font-size:12.5px;font-weight:600;padding:4px 14px;border-radius:999px;background:#F6EFD8;color:#8A6D1E;">編集中</span><span style="color:#B4643E;font-size:13px;">→</span>
-              <span style="font-size:12.5px;font-weight:600;padding:4px 14px;border-radius:999px;background:#EDF0E6;color:#6E7A5E;">公開中</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="background:#F6E9E1;border-radius:10px;padding:14px 18px;font-size:13.5px;color:#5A2C15;margin-top:16px;line-height:1.75;">✍️ <b style="color:#8A4527;">完璧を目指さない。</b>3行のメモでも、無いよりずっと価値があります。あとから誰でも直せるのがNotionの良いところ。</div>
-    </div>
-  </section>
-
-  <section id="rules" style="padding:52px 0;border-top:1px solid #EFE7DA;">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;">
-      <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;color:#B4643E;letter-spacing:.1em;flex-shrink:0;padding-top:2px;">04</div>
-      <div>
-        <h2 style="font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:#5A2C15;margin:0;">運用ルール（約束事）</h2>
-        <div style="font-size:13px;color:#8B8177;margin-top:3px;">これだけ守れば、ずっと使える</div>
-      </div>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <div style="display:flex;gap:15px;align-items:flex-start;padding:0 0 15px;border-bottom:1px solid #EFE7DA;">
-        <div style="font-size:20px;flex-shrink:0;line-height:1.5;">🏷️</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#5A2C15;">分類は「DB_情報分類」に追加する</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;">新しい棚（分類）が必要になったら、<b>DB_情報分類</b>で分類(小)を1件追加し、大分類（ノウハウ／マニュアル）を選びます。ここが分類の大元です。</div></div>
-      </div>
-      <div style="display:flex;gap:15px;align-items:flex-start;padding:15px 0;border-bottom:1px solid #EFE7DA;">
-        <div style="font-size:20px;flex-shrink:0;line-height:1.5;">✅</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#5A2C15;">公開状態をこまめに更新する</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;">書きかけは「編集中」、完成したら「公開中」に。状態が分かると、読む人が安心して参照できます。</div></div>
-      </div>
-      <div style="display:flex;gap:15px;align-items:flex-start;padding:15px 0;border-bottom:1px solid #EFE7DA;">
-        <div style="font-size:20px;flex-shrink:0;line-height:1.5;">🔄</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#5A2C15;">古くなったナレッジは「直す or 印を付ける」</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;">間違いを見つけた人がその場で直すのが基本。自信がなければ「要対応」に戻すか、コメントを残すだけでも十分です。</div></div>
-      </div>
-      <div style="display:flex;gap:15px;align-items:flex-start;padding:15px 0 0;">
-        <div style="font-size:20px;flex-shrink:0;line-height:1.5;">🗑️</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#5A2C15;">消してしまっても慌てない</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;">Notionはゴミ箱（サイドバー最下部）から復元できます。まずは落ち着いて。</div></div>
-      </div>
-    </div>
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #E7DDCE;">
-      <h3 style="font-size:16px;color:#8A4527;margin-bottom:14px;font-weight:700;">❓ よくある質問</h3>
-      <dl>
-        <dt style="font-weight:700;color:#8A4527;margin-top:0;font-size:14px;"><span style="font-family:'Noto Serif JP',serif;margin-right:8px;color:#B4643E;">Q</span>どの分類に入れるか迷う</dt>
-        <dd style="color:#5F564E;font-size:13.5px;margin-top:3px;padding-left:22px;">いちばん近いものをひとつ選べばOK。完璧な分類より「入っていること」が大事です。</dd>
-        <dt style="font-weight:700;color:#8A4527;margin-top:16px;font-size:14px;"><span style="font-family:'Noto Serif JP',serif;margin-right:8px;color:#B4643E;">Q</span>対象職種は複数選べる？</dt>
-        <dd style="color:#5F564E;font-size:13.5px;margin-top:3px;padding-left:22px;">選べます。薬剤師・医療事務の両方に関係するなら両方チェックしてください。</dd>
-        <dt style="font-weight:700;color:#8A4527;margin-top:16px;font-size:14px;"><span style="font-family:'Noto Serif JP',serif;margin-right:8px;color:#B4643E;">Q</span>マニュアルを消してしまったかも</dt>
-        <dd style="color:#5F564E;font-size:13.5px;margin-top:3px;padding-left:22px;">ゴミ箱から復元できます。30日以内なら元に戻せます。</dd>
-      </dl>
-    </div>
-  </section>
-
-  <section id="ojt" style="padding:52px 0;border-top:1px solid #EFE7DA;background:#EDF0E6;margin:0 -22px;padding-left:22px;padding-right:22px;">
-    <span style="display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;color:#6E7A5E;border:1px solid #C7D0B6;border-radius:999px;padding:3px 12px;margin-bottom:14px;">OPTION ／ 使う店舗だけ</span>
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;">
-      <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;color:#6E7A5E;letter-spacing:.1em;flex-shrink:0;padding-top:2px;">＋</div>
-      <div>
-        <h2 style="font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:#41492F;margin:0;">おまけ：新人OJTの進め方</h2>
-        <div style="font-size:13px;color:#8B8177;margin-top:3px;">導入している店舗向け。覚えるたびに、ゲージが伸びる</div>
-      </div>
-    </div>
-
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #DDE4CE;">
-      <a class="db-link" href="https://app.notion.com/p/3851e4a02fe381cb9df9d0035cffa253" target="_blank" rel="noopener" style="border-radius:12px;padding:18px 20px;border:1px solid #DDE4CE;background:#FFFDFB;display:block;">
-        <div style="font-weight:700;font-size:15px;color:#41492F;margin-bottom:5px;display:flex;align-items:flex-start;gap:6px;">🎓 新人OJT管理（複製して使用）<span style="font-size:11px;font-weight:500;color:#6E7A5E;border:1px solid #C7D0B6;border-radius:999px;padding:1px 9px;margin-left:auto;white-space:nowrap;">開く ↗</span></div>
-        <div style="font-size:13px;color:#5F564E;line-height:1.75;">新人ひとりにつき1ページ。マニュアルを取り込んでチェックリスト化し、進み具合をゲージで見える化します。</div>
+<section id="map">
+  <div class="head">
+    <div class="num">01</div>
+    <h2 class="serif">全体マップ</h2>
+    <div class="sub">どこに何があるか、まずこの一枚</div>
+  </div>
+  <div class="card">
+    <div class="map">
+      <a class="db main" href="https://app.notion.com/p/2011e4a02fe38358b07001e752dd2048" target="_blank" rel="noopener">
+        <div class="db-name">📚 DB_店舗ナレッジ（本体）<span class="db-open">開く ↗</span></div>
+        <div class="db-desc">すべてのマニュアル・ナレッジはここに入っています。困ったらまずここ。「対象職種」や「分類」で絞り込んで探せます。</div>
       </a>
-    </div>
-
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #DDE4CE;">
-      <h3 style="font-size:16px;color:#6E7A5E;margin-bottom:14px;font-weight:700;">🧑‍🏫 教育担当者がやること（最初だけ）</h3>
-      <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #6E7A5E;color:#41492F;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">1</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">OJTテンプレページを複製</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">「新人OJT管理（複製して使用）」を複製し、ページ名を「〇〇さんOJT」に変更。中のチェックリストごと新人さん専用になります。</div></div>
-      </div>
-      <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #6E7A5E;color:#41492F;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">2</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">マニュアルを「取り込みボタン」で追加</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">DB_店舗ナレッジで覚えてほしいマニュアルの<span style="display:inline-block;background:#EDF0E6;color:#6E7A5E;font-size:12px;font-weight:500;padding:1px 9px;border-radius:6px;margin:0 1px;">新人OJT用</span>ボタンを押すと、新人さんのチェックリストに行が追加されます。</div></div>
-      </div>
-      <div style="display:flex;gap:18px;position:relative;padding-bottom:0;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #6E7A5E;color:#41492F;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">3</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">各行に「分類カテゴリ」とタイトルを設定</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">追加された行で、マニュアルの分類(小)と同じ「分類カテゴリ」を選び、行のタイトルにマニュアル名を入力します（ここは手作業。ページ内の説明にも書いてあります）。</div></div>
+      <div class="map-arrow">▲ 分類でひもづけ　／　▼ 新人OJTに取り込み</div>
+      <div class="map-row">
+        <a class="db" href="https://app.notion.com/p/9391e4a02fe38242918c018bc3bcd73a" target="_blank" rel="noopener">
+          <div class="db-name">🏷️ DB_情報分類<span class="db-open">開く ↗</span></div>
+          <div class="db-desc">「外来業務」「在庫管理」などのラベル（棚）を管理する目次。ナレッジはここの分類にひもづきます。</div>
+        </a>
+        <a class="db" href="https://app.notion.com/p/3851e4a02fe381cb9df9d0035cffa253" target="_blank" rel="noopener">
+          <div class="db-name">🎓 新人OJT管理<span class="db-open">開く ↗</span></div>
+          <div class="db-desc">新人教育のチェックリスト。<b>使う店舗だけ</b>の任意機能です（→ おまけ参照）。</div>
+        </a>
       </div>
     </div>
+    <div class="callout">💡 <b>迷ったら「DB_店舗ナレッジ」へ。</b>本棚はこのひとつだけ。あとは「探しやすくする棚のラベル（DB_情報分類）」と、店舗によって使う「新人用チェックリスト」です。</div>
+  </div>
+</section>
 
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #DDE4CE;">
-      <h3 style="font-size:16px;color:#6E7A5E;margin-bottom:14px;font-weight:700;">🌱 新人さんがやること（毎日）</h3>
-      <div style="display:flex;gap:18px;position:relative;padding-bottom:22px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #6E7A5E;color:#41492F;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">1</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">上から順にマニュアルを読んで実践</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">チェックリストのリンクからマニュアルへ飛べます。わからない事はメモ欄に残してOK。</div></div>
+<section id="find">
+  <div class="head">
+    <div class="num">02</div>
+    <h2 class="serif">ナレッジを探す</h2>
+    <div class="sub">3つの入口、どれでも着きます</div>
+  </div>
+  <div class="card">
+    <div class="steps">
+      <div class="step">
+        <div class="st-n">1</div>
+        <div>
+          <div class="st-title">分類から辿る（おすすめ）</div>
+          <div class="st-desc"><b>DB_情報分類</b>の「カテゴリ別」ビューを開くと、<span class="tag">ノウハウ</span><span class="tag">マニュアル</span>の大分類ごとに<span class="tag">外来業務</span><span class="tag">在庫管理</span>などの小分類が並びます。分類をクリックすると、そこに属するナレッジ一覧に辿れます。</div>
+        </div>
       </div>
-      <div style="display:flex;gap:18px;position:relative;padding-bottom:0;">
-        <div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid #6E7A5E;color:#41492F;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Serif JP',serif;">2</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">できるようになったら ✔ ボタン</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;margin-top:2px;">✔を押すと完了日が自動で入り、その分類のゲージが伸びます。</div></div>
+      <div class="step">
+        <div class="st-n">2</div>
+        <div>
+          <div class="st-title">絞り込みで探す</div>
+          <div class="st-desc"><b>DB_店舗ナレッジ</b>の「一覧（検索用）」で、「対象職種」（<span class="tag">薬剤師</span><span class="tag">医療事務</span>）や「公開状態」でフィルターすると、自分に関係あるものだけに絞れます。</div>
+        </div>
       </div>
-      <div style="margin-top:16px;">
-        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#41492F;margin-bottom:4px;font-weight:500;"><span>外来業務</span><span>80%</span></div>
-        <div style="height:9px;background:#DCE3CE;border-radius:5px;overflow:hidden;margin-bottom:11px;"><div style="height:100%;background:#6E7A5E;border-radius:5px;width:80%;"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#41492F;margin-bottom:4px;font-weight:500;"><span>在庫管理</span><span>50%</span></div>
-        <div style="height:9px;background:#DCE3CE;border-radius:5px;overflow:hidden;margin-bottom:11px;"><div style="height:100%;background:#6E7A5E;border-radius:5px;width:50%;"></div></div>
-        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#41492F;margin-bottom:4px;font-weight:500;"><span>処方入力</span><span>25%</span></div>
-        <div style="height:9px;background:#DCE3CE;border-radius:5px;overflow:hidden;margin-bottom:11px;"><div style="height:100%;background:#6E7A5E;border-radius:5px;width:25%;"></div></div>
+      <div class="step">
+        <div class="st-n">3</div>
+        <div>
+          <div class="st-title">キーワード検索</div>
+          <div class="st-desc">Notion左上の🔍検索（ショートカット <span class="tag">Ctrl+P</span> / <span class="tag">⌘+P</span>）にキーワードを入力。ページ名だけでなく本文もヒットします。</div>
+        </div>
       </div>
-      <div style="background:#E4EAD7;color:#3B4430;border-radius:10px;padding:14px 18px;font-size:13.5px;margin-top:5px;line-height:1.75;">🎉 <b style="color:#6E7A5E;">ゲージは「分類別ゲージ」ギャラリーで見られます。</b>全部100%になった日が、ひとり立ちの日。</div>
     </div>
+  </div>
+</section>
 
-    <div style="background:#fff;border-radius:14px;padding:26px 30px;margin-bottom:14px;border:1px solid #DDE4CE;">
-      <div style="display:flex;gap:15px;align-items:flex-start;padding:0 0 15px;border-bottom:1px solid #EFE7DA;">
-        <div style="font-size:20px;flex-shrink:0;line-height:1.5;">🏷️</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">新しい分類を作ったら、2か所に登録する</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;">OJTのゲージ用分類は「DB_情報分類」とは別管理です。片方に追加したら、<b>もう片方にも同じ名前で手動追加</b>してください（自動では同期されません）。</div></div>
+<section id="write">
+  <div class="head">
+    <div class="num">03</div>
+    <h2 class="serif">ナレッジを書く・追加する</h2>
+    <div class="sub">「あとで誰かが助かる」を1ページに</div>
+  </div>
+  <div class="card">
+    <div class="steps">
+      <div class="step">
+        <div class="st-n">1</div>
+        <div>
+          <div class="st-title">DB_店舗ナレッジで「＋新規」</div>
+          <div class="st-desc">用途に合うテンプレを選ぶと下書きが楽です：<span class="tag">マニュアル</span><span class="tag">薬学的介入</span><span class="tag">ヒヤリハット事例</span>。タイトルは「あとから探す人が打ちそうな言葉」で。<br>例）「レセコン再起動の手順」○ ／「例のアレの対処」✕</div>
+        </div>
       </div>
-      <div style="display:flex;gap:15px;align-items:flex-start;padding:15px 0 0;">
-        <div style="font-size:20px;flex-shrink:0;line-height:1.5;">🚫</div>
-        <div><div style="font-weight:700;font-size:14.5px;color:#41492F;">「非表示(消さない)」の項目は消さない</div><div style="font-size:13.5px;color:#5F564E;line-height:1.8;">ゲージの計算に使われている裏方の項目です。名前のとおり、そっとしておいてください。</div></div>
+      <div class="step">
+        <div class="st-n">2</div>
+        <div>
+          <div class="st-title">プロパティを設定</div>
+          <div class="st-desc">「対象職種」を選び、<b>「分類(小)」に必ずひとつ</b>ひもづけます。分類がないと棚に置かれず、誰にも見つけてもらえません。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="st-n">3</div>
+        <div>
+          <div class="st-title">本文を書いて「公開状態」を進める</div>
+          <div class="st-desc">手順は箇条書きで、写真・スクショは大歓迎。書き上がりに合わせて公開状態を進めます。</div>
+          <div class="flow">
+            <span class="p">要対応</span><span class="arw">→</span>
+            <span class="p">編集中</span><span class="arw">→</span>
+            <span class="p on">公開中</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    <div class="callout">✍️ <b>完璧を目指さない。</b>3行のメモでも、無いよりずっと価値があります。あとから誰でも直せるのがNotionの良いところ。</div>
+  </div>
+</section>
 
-  <footer style="text-align:center;font-size:12px;color:#8B8177;padding:36px 0 56px;">
-    ナレッジ管理テンプレート 使い方ガイド ／ <a href="https://app.notion.com/p/5ca1e4a02fe383cb8bc8017dbdbef0a7" target="_blank" rel="noopener">トップに戻る ↗</a>
-  </footer>
+<section id="rules">
+  <div class="head">
+    <div class="num">04</div>
+    <h2 class="serif">運用ルール（約束事）</h2>
+    <div class="sub">これだけ守れば、ずっと使える</div>
+  </div>
+  <div class="card">
+    <div class="rule">
+      <div class="ic">🏷️</div>
+      <div>
+        <div class="r-title">分類は「DB_情報分類」に追加する</div>
+        <div class="r-desc">新しい棚（分類）が必要になったら、<b>DB_情報分類</b>で分類(小)を1件追加し、大分類（ノウハウ／マニュアル）を選びます。ここが分類の大元です。</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="ic">✅</div>
+      <div>
+        <div class="r-title">公開状態をこまめに更新する</div>
+        <div class="r-desc">書きかけは「編集中」、完成したら「公開中」に。状態が分かると、読む人が安心して参照できます。</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="ic">🔄</div>
+      <div>
+        <div class="r-title">古くなったナレッジは「直す or 印を付ける」</div>
+        <div class="r-desc">間違いを見つけた人がその場で直すのが基本。自信がなければ「要対応」に戻すか、コメントを残すだけでも十分です。</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="ic">🗑️</div>
+      <div>
+        <div class="r-title">消してしまっても慌てない</div>
+        <div class="r-desc">Notionはゴミ箱（サイドバー最下部）から復元できます。まずは落ち着いて。</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>よくある質問</h3>
+    <dl class="qa">
+      <dt><span class="q">Q</span>どの分類に入れるか迷う</dt>
+      <dd>いちばん近いものをひとつ選べばOK。完璧な分類より「入っていること」が大事です。</dd>
+      <dt><span class="q">Q</span>対象職種は複数選べる？</dt>
+      <dd>選べます。薬剤師・医療事務の両方に関係するなら両方チェックしてください。</dd>
+      <dt><span class="q">Q</span>マニュアルを消してしまったかも</dt>
+      <dd>ゴミ箱から復元できます。30日以内なら元に戻せます。</dd>
+    </dl>
+  </div>
+</section>
 
 </div>
+
+<section id="ojt" class="option">
+  <div class="wrap">
+    <span class="badge">Option ／ 使う店舗だけ</span>
+    <div class="head">
+      <div class="num">＋</div>
+      <h2 class="serif">おまけ：新人OJTの進め方</h2>
+      <div class="sub">導入している店舗向け。覚えるたびに、ゲージが伸びる</div>
+    </div>
+
+    <div class="card">
+      <div class="map">
+        <a class="db" href="https://app.notion.com/p/3851e4a02fe381cb9df9d0035cffa253" target="_blank" rel="noopener">
+          <div class="db-name">🎓 新人OJT管理（複製して使用）<span class="db-open">開く ↗</span></div>
+          <div class="db-desc">新人ひとりにつき1ページ。マニュアルを取り込んでチェックリスト化し、進み具合をゲージで見える化します。</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>教育担当者がやること（最初だけ）</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="st-n">1</div>
+          <div>
+            <div class="st-title">OJTテンプレページを複製</div>
+            <div class="st-desc">「新人OJT管理（複製して使用）」を複製し、ページ名を「〇〇さんOJT」に変更。中のチェックリストごと新人さん専用になります。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="st-n">2</div>
+          <div>
+            <div class="st-title">マニュアルを「取り込みボタン」で追加</div>
+            <div class="st-desc">DB_店舗ナレッジで覚えてほしいマニュアルの<span class="tag">新人OJT用</span>ボタンを押すと、新人さんのチェックリストに行が追加されます。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="st-n">3</div>
+          <div>
+            <div class="st-title">各行に「分類カテゴリ」とタイトルを設定</div>
+            <div class="st-desc">追加された行で、マニュアルの分類(小)と同じ「分類カテゴリ」を選び、行のタイトルにマニュアル名を入力します（ここは手作業。ページ内の説明にも書いてあります）。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>新人さんがやること（毎日）</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="st-n">1</div>
+          <div>
+            <div class="st-title">上から順にマニュアルを読んで実践</div>
+            <div class="st-desc">チェックリストのリンクからマニュアルへ飛べます。わからない事はメモ欄に残してOK。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="st-n">2</div>
+          <div>
+            <div class="st-title">できるようになったら ✔ ボタン</div>
+            <div class="st-desc">✔を押すと完了日が自動で入り、その分類のゲージが伸びます。</div>
+          </div>
+        </div>
+      </div>
+      <div class="gz" style="margin-top:22px;">
+        <div class="gz-row"><span>外来業務</span><span class="gz-pct" data-w="80">0%</span></div>
+        <div class="gz-bar"><div class="gz-fill" data-w="80"></div></div>
+        <div class="gz-row"><span>在庫管理</span><span class="gz-pct" data-w="50">0%</span></div>
+        <div class="gz-bar"><div class="gz-fill" data-w="50"></div></div>
+        <div class="gz-row"><span>処方入力</span><span class="gz-pct" data-w="25">0%</span></div>
+        <div class="gz-bar"><div class="gz-fill" data-w="25"></div></div>
+      </div>
+      <div class="callout">🎉 <b>ゲージは「分類別ゲージ」ギャラリーで見られます。</b>全部100%になった日が、ひとり立ちの日。</div>
+    </div>
+
+    <div class="card">
+      <div class="rule">
+        <div class="ic">🏷️</div>
+        <div>
+          <div class="r-title">新しい分類を作ったら、2か所に登録する</div>
+          <div class="r-desc">OJTのゲージ用分類は「DB_情報分類」とは別管理です。片方に追加したら、<b>もう片方にも同じ名前で手動追加</b>してください（自動では同期されません）。</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="ic">🚫</div>
+        <div>
+          <div class="r-title">「非表示(消さない)」の項目は消さない</div>
+          <div class="r-desc">ゲージの計算に使われている裏方の項目です。名前のとおり、そっとしておいてください。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  ナレッジ管理テンプレート 使い方ガイド ／ <a href="https://app.notion.com/p/5ca1e4a02fe383cb8bc8017dbdbef0a7" target="_blank" rel="noopener">トップに戻る ↗</a>
+</footer>
+
+<script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+    // reading progress bar
+    var bar = document.getElementById('progress');
+    var orbSet = false, ticking = false;
+    function onScroll(){
+      var d = document.documentElement;
+      var max = d.scrollHeight - d.clientHeight;
+      var y = window.scrollY || d.scrollTop;
+      if(bar) bar.style.width = (max>0 ? (y/max*100) : 0) + '%';
+      if(!reduce) d.style.setProperty('--orb', (y * 0.18) + 'px'); // parallax orb
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if(!ticking){ requestAnimationFrame(onScroll); ticking = true; }
+    }, {passive:true});
+    onScroll();
+
+    // scroll-spy nav
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav a'));
+    var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    if('IntersectionObserver' in window){
+      var spy = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            var i = secs.indexOf(e.target);
+            links.forEach(function(l){ l.classList.remove('active'); });
+            if(links[i]) links[i].classList.add('active');
+          }
+        });
+      }, {rootMargin:'-45% 0px -50% 0px'});
+      secs.forEach(function(s){ if(s) spy.observe(s); });
+    }
+
+    // gauge fill + count-up
+    function fillGauge(root){
+      root.querySelectorAll('.gz-fill').forEach(function(f){ f.style.width = f.getAttribute('data-w') + '%'; });
+      root.querySelectorAll('.gz-pct').forEach(function(p){
+        var target = +p.getAttribute('data-w');
+        if(reduce){ p.textContent = target + '%'; return; }
+        var t0 = null;
+        function step(ts){
+          if(!t0) t0 = ts;
+          var k = Math.min((ts - t0)/1100, 1);
+          p.textContent = Math.round(target * (1-Math.pow(1-k,3))) + '%';
+          if(k<1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    // reveals (skip entirely if reduced motion)
+    if(reduce) return;
+    var items = Array.prototype.slice.call(document.querySelectorAll('.head, .card'));
+    items.forEach(function(el){
+      el.classList.add('reveal');
+      // alternate direction for map cards / give subtle variety
+      if(el.classList.contains('card')) el.classList.add('rl');
+    });
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          if(e.target.querySelector && e.target.querySelector('.gz')) fillGauge(e.target);
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>
