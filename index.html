@@ -135,7 +135,7 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .fseed span{position:absolute;white-space:nowrap;font-size:9px;font-weight:600;letter-spacing:.06em;padding:2px 9px;border-radius:999px;opacity:0;animation:seed 5.2s ease infinite;}
 .fseed span:nth-child(1){background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent-deep);}
 .fseed span:nth-child(2){background:var(--accent);border:1px solid var(--accent);color:#fff;animation-delay:2.6s;}
-@keyframes seed{0%{opacity:0;transform:translateY(-24px);}4%{opacity:1;transform:translateY(-8px);}12%{opacity:1;transform:translateY(38px);}44%{opacity:1;transform:translateY(38px);}47%{opacity:0;transform:translateY(38px);}100%{opacity:0;transform:translateY(-24px);}}
+@keyframes seed{0%{opacity:0;transform:translateY(-24px);}5%{opacity:1;transform:translateY(-16px);}26%{opacity:1;transform:translateY(38px);}44%{opacity:1;transform:translateY(38px);}47%{opacity:0;transform:translateY(38px);}100%{opacity:0;transform:translateY(-24px);}}
 /* 書く: typing doc */
 .fdoc{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:24px;}
 .fdoc i{width:0;height:8px;border-radius:2px;background:#E5BFA2;display:block;}
@@ -149,15 +149,21 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 @keyframes write3{0%,24%{width:0;opacity:1;}42%{width:90%;}88%{width:90%;opacity:1;}95%,100%{width:90%;opacity:0;}}
 @keyframes write4{0%,36%{width:0;opacity:1;}54%{width:60%;}88%{width:60%;opacity:1;}95%,100%{width:60%;opacity:0;}}
 @keyframes inkc{0%,49%{background:#E5BFA2;}50%,99%{background:var(--accent);}100%{background:#E5BFA2;}}
-/* 貯まる: マニュアル/ノウハウ 2列の積み上げ */
-.fstack{display:flex;gap:9px;align-items:flex-end;justify-content:center;height:100%;padding-bottom:2px;}
-.fpile{display:flex;flex-direction:column-reverse;gap:4px;}
-.fpile i{width:33px;height:9px;border-radius:3px;display:block;}
-.fpile.pm i{background:var(--accent-soft);border:1px solid var(--accent);}
-.fpile.pk i{background:var(--accent);border:1px solid var(--accent);}
-.fpile.pm i.grow{animation:addbar 5.2s ease -2.81s infinite;}
-.fpile.pk i.grow{animation:addbar 5.2s ease -.21s infinite;}
-@keyframes addbar{0%,3%{opacity:0;transform:translateY(-14px);}10%,88%{opacity:1;transform:translateY(0);}94%,100%{opacity:0;transform:translateY(-14px);}}
+/* 貯まる: 1列の積み上げ（下から順に積まれ、全段そろって消える） */
+.fstack{display:flex;flex-direction:column-reverse;gap:5px;align-items:center;justify-content:center;height:100%;}
+.fstack i{width:60px;height:9px;border-radius:3px;display:block;opacity:0;}
+.fstack i:nth-child(odd){background:var(--accent-soft);border:1px solid var(--accent);}
+.fstack i:nth-child(even){background:var(--accent);border:1px solid var(--accent);}
+.fstack i:nth-child(1){animation:stack1 5.2s ease infinite;}
+.fstack i:nth-child(2){animation:stack2 5.2s ease infinite;}
+.fstack i:nth-child(3){animation:stack3 5.2s ease infinite;}
+.fstack i:nth-child(4){animation:stack4 5.2s ease infinite;}
+.fstack i:nth-child(5){animation:stack5 5.2s ease infinite;}
+@keyframes stack1{0%{opacity:0;transform:translateY(-12px);}6%{opacity:1;transform:none;}88%{opacity:1;transform:none;}94%,100%{opacity:0;transform:translateY(-12px);}}
+@keyframes stack2{0%,17%{opacity:0;transform:translateY(-12px);}23%{opacity:1;transform:none;}88%{opacity:1;transform:none;}94%,100%{opacity:0;transform:translateY(-12px);}}
+@keyframes stack3{0%,34%{opacity:0;transform:translateY(-12px);}40%{opacity:1;transform:none;}88%{opacity:1;transform:none;}94%,100%{opacity:0;transform:translateY(-12px);}}
+@keyframes stack4{0%,51%{opacity:0;transform:translateY(-12px);}57%{opacity:1;transform:none;}88%{opacity:1;transform:none;}94%,100%{opacity:0;transform:translateY(-12px);}}
+@keyframes stack5{0%,68%{opacity:0;transform:translateY(-12px);}74%{opacity:1;transform:none;}88%{opacity:1;transform:none;}94%,100%{opacity:0;transform:translateY(-12px);}}
 /* status chips (運用ルール) */
 .stflow{display:flex;gap:9px;align-items:center;margin-top:12px;flex-wrap:wrap;}
 .stflow .sarw{color:var(--ink-3);font-size:12px;}
@@ -214,8 +220,8 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
   .flow{gap:5px;}
   .fbox{width:86px;height:84px;padding:8px;border-radius:11px;}
   .fdoc{gap:5px;} .fdoc i{height:6px;}
-  .fpile i{width:27px;height:8px;}
-  .fstack{gap:7px;}
+  .fstack i{width:52px;height:8px;}
+  .fstack{gap:4px;}
   .fchips{gap:4px;} .fchips span{font-size:8.5px;padding:2px 0;}
   .fseed{width:86px;}
   .flabel{font-size:10px;letter-spacing:.1em;}
@@ -255,7 +261,7 @@ footer a{color:var(--accent-deep);text-decoration:none;}
         </div>
         <div class="fconn"><i></i><i></i><i></i></div>
         <div class="fstation">
-          <div class="fbox db"><div class="fstack"><div class="fpile pm"><i></i><i></i><i></i><i></i><i class="grow"></i></div><div class="fpile pk"><i></i><i></i><i></i><i></i><i class="grow"></i></div></div></div>
+          <div class="fbox db"><div class="fstack"><i></i><i></i><i></i><i></i><i></i></div></div>
           <div class="flabel">積み上げる</div>
         </div>
         <div class="fconn"><i></i><i></i><i></i></div>
@@ -265,8 +271,8 @@ footer a{color:var(--accent-deep);text-decoration:none;}
         </div>
       </div>
       <svg class="floop" viewBox="0 0 300 34" preserveAspectRatio="none">
-        <path d="M264 6 C 230 34, 70 34, 36 6"/>
-        <path class="fl-arrow" d="M36 6 L43 9.5 L42 2.5 Z"/>
+        <path d="M264 6 C 200 40, 100 40, 36 6"/>
+        <path class="fl-arrow" d="M36 6 L47 4 L44 14 Z"/>
       </svg>
       <div class="floop-label">更新して、また育てる</div>
     </div>
