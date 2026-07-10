@@ -138,12 +138,13 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 @keyframes seed{0%,100%{opacity:0;transform:translateY(0);}12%{opacity:1;transform:translateY(3px);}40%{opacity:1;transform:translateY(5px);}62%{opacity:0;transform:translateY(34px) scale(.72);}}
 /* 書く: typing doc */
 .fdoc{width:100%;display:flex;flex-direction:column;gap:8px;}
-.fdoc i{height:8px;border-radius:2px;background:var(--line);display:block;}
-.fdoc i:nth-child(1){width:80%;animation:type 5.2s ease infinite;}
-.fdoc i:nth-child(2){width:100%;animation:type 5.2s ease infinite .12s;}
-.fdoc i:nth-child(3){width:90%;animation:type 5.2s ease infinite .24s;}
-.fdoc i:nth-child(4){width:60%;animation:type 5.2s ease infinite .36s;}
-@keyframes type{0%,27%{background:var(--accent);}34%,77%{background:#E5BFA2;}84%,100%{background:var(--accent);}}
+.fdoc i{width:0;height:8px;border-radius:2px;background:#E5BFA2;display:block;}
+.fdoc i:nth-child(1){--w:80%;animation:write 2.6s ease-out 1.56s infinite,inkc 5.2s step-end 1.56s infinite;}
+.fdoc i:nth-child(2){--w:100%;animation:write 2.6s ease-out 1.78s infinite,inkc 5.2s step-end 1.78s infinite;}
+.fdoc i:nth-child(3){--w:90%;animation:write 2.6s ease-out 2.0s infinite,inkc 5.2s step-end 2.0s infinite;}
+.fdoc i:nth-child(4){--w:60%;animation:write 2.6s ease-out 2.22s infinite,inkc 5.2s step-end 2.22s infinite;}
+@keyframes write{0%{width:0;opacity:1;}8%{opacity:1;}58%{width:var(--w);}90%{width:var(--w);opacity:1;}100%{width:var(--w);opacity:0;}}
+@keyframes inkc{0%,49%{background:#E5BFA2;}50%,99%{background:var(--accent);}100%{background:#E5BFA2;}}
 /* 貯まる: マニュアル/ノウハウ 2列の積み上げ */
 .fstack{display:flex;gap:9px;align-items:flex-end;justify-content:center;height:100%;padding-bottom:2px;}
 .fpile{display:flex;flex-direction:column-reverse;gap:4px;}
@@ -251,7 +252,7 @@ footer a{color:var(--accent-deep);text-decoration:none;}
         </div>
         <div class="fconn"><i></i><i></i><i></i></div>
         <div class="fstation">
-          <div class="fbox db"><div class="fstack"><div class="fpile pm"><i></i><i></i><i></i><i></i><i class="grow"></i></div><div class="fpile pk"><i></i><i></i><i></i><i class="grow"></i></div></div></div>
+          <div class="fbox db"><div class="fstack"><div class="fpile pm"><i></i><i></i><i></i><i></i><i class="grow"></i></div><div class="fpile pk"><i></i><i></i><i></i><i></i><i class="grow"></i></div></div></div>
           <div class="flabel">積み上げる</div>
         </div>
         <div class="fconn"><i></i><i></i><i></i></div>
