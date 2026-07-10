@@ -135,15 +135,19 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .fseed span{position:absolute;white-space:nowrap;font-size:9px;font-weight:600;letter-spacing:.06em;padding:2px 9px;border-radius:999px;opacity:0;animation:seed 5.2s ease infinite;}
 .fseed span:nth-child(1){background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent-deep);}
 .fseed span:nth-child(2){background:var(--accent);border:1px solid var(--accent);color:#fff;animation-delay:2.6s;}
-@keyframes seed{0%{opacity:0;transform:translateY(-24px);}4%{opacity:1;transform:translateY(-8px);}15%{opacity:1;transform:translateY(38px);}27%{opacity:1;transform:translateY(38px);}31%{opacity:0;transform:translateY(38px);}100%{opacity:0;transform:translateY(-24px);}}
+@keyframes seed{0%{opacity:0;transform:translateY(-24px);}4%{opacity:1;transform:translateY(-8px);}12%{opacity:1;transform:translateY(38px);}44%{opacity:1;transform:translateY(38px);}47%{opacity:0;transform:translateY(38px);}100%{opacity:0;transform:translateY(-24px);}}
 /* 書く: typing doc */
 .fdoc{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:24px;}
 .fdoc i{width:0;height:8px;border-radius:2px;background:#E5BFA2;display:block;}
-.fdoc i:nth-child(1){--w:80%;animation:write 2.6s ease-out .25s infinite,inkc 5.2s step-end .25s infinite;}
-.fdoc i:nth-child(2){--w:100%;animation:write 2.6s ease-out .45s infinite,inkc 5.2s step-end .25s infinite;}
-.fdoc i:nth-child(3){--w:90%;animation:write 2.6s ease-out .65s infinite,inkc 5.2s step-end .25s infinite;}
-.fdoc i:nth-child(4){--w:60%;animation:write 2.6s ease-out .85s infinite,inkc 5.2s step-end .25s infinite;}
-@keyframes write{0%{width:0;opacity:1;}45%{width:var(--w);}90%{width:var(--w);opacity:1;}100%{width:var(--w);opacity:0;}}
+.fdoc i:nth-child(1){animation:write1 2.6s ease-out infinite,inkc 5.2s step-end infinite;}
+.fdoc i:nth-child(2){animation:write2 2.6s ease-out infinite,inkc 5.2s step-end infinite;}
+.fdoc i:nth-child(3){animation:write3 2.6s ease-out infinite,inkc 5.2s step-end infinite;}
+.fdoc i:nth-child(4){animation:write4 2.6s ease-out infinite,inkc 5.2s step-end infinite;}
+/* 順番に書き出し（開始をずらす）、消えるのは全線＋タグと同時（88〜95%） */
+@keyframes write1{0%{width:0;opacity:1;}18%{width:80%;}88%{width:80%;opacity:1;}95%,100%{width:80%;opacity:0;}}
+@keyframes write2{0%,12%{width:0;opacity:1;}30%{width:100%;}88%{width:100%;opacity:1;}95%,100%{width:100%;opacity:0;}}
+@keyframes write3{0%,24%{width:0;opacity:1;}42%{width:90%;}88%{width:90%;opacity:1;}95%,100%{width:90%;opacity:0;}}
+@keyframes write4{0%,36%{width:0;opacity:1;}54%{width:60%;}88%{width:60%;opacity:1;}95%,100%{width:60%;opacity:0;}}
 @keyframes inkc{0%,49%{background:#E5BFA2;}50%,99%{background:var(--accent);}100%{background:#E5BFA2;}}
 /* 貯まる: マニュアル/ノウハウ 2列の積み上げ */
 .fstack{display:flex;gap:9px;align-items:flex-end;justify-content:center;height:100%;padding-bottom:2px;}
