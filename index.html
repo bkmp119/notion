@@ -137,16 +137,23 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .fseed span:nth-child(2){background:var(--accent);border:1px solid var(--accent);color:#fff;animation-delay:2.6s;}
 @keyframes seed{0%,100%{opacity:0;transform:translateY(0);}12%{opacity:1;transform:translateY(3px);}40%{opacity:1;transform:translateY(5px);}62%{opacity:0;transform:translateY(34px) scale(.72);}}
 /* 書く: typing doc */
-.fdoc{width:100%;display:flex;flex-direction:column;gap:7px;}
-.fdoc i{height:7px;border-radius:2px;background:var(--line);display:block;}
+.fdoc{width:100%;display:flex;flex-direction:column;gap:8px;}
+.fdoc i{height:8px;border-radius:2px;background:var(--line);display:block;}
 .fdoc i:nth-child(1){width:80%;animation:type 5.2s ease infinite;}
 .fdoc i:nth-child(2){width:100%;animation:type 5.2s ease infinite .12s;}
-.fdoc i:nth-child(3){width:60%;animation:type 5.2s ease infinite .24s;}
+.fdoc i:nth-child(3){width:90%;animation:type 5.2s ease infinite .24s;}
+.fdoc i:nth-child(4){width:60%;animation:type 5.2s ease infinite .36s;}
 @keyframes type{0%,27%{background:var(--accent);}34%,77%{background:#E5BFA2;}84%,100%{background:var(--accent);}}
-/* 貯まる: accumulating stack */
-.fstack{display:flex;flex-direction:column-reverse;gap:4px;align-items:center;}
-.fstack i{width:62px;height:9px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--accent);display:block;}
-.fstack i.grow{animation:add 3.9s ease-in-out infinite;}
+/* 貯まる: マニュアル/ノウハウ 2列の積み上げ */
+.fstack{display:flex;gap:9px;align-items:flex-end;justify-content:center;height:100%;padding-bottom:2px;}
+.fpile{display:flex;flex-direction:column-reverse;gap:4px;}
+.fpile i{width:33px;height:9px;border-radius:3px;display:block;}
+.fpile.pm i{background:var(--accent-soft);border:1px solid var(--accent);}
+.fpile.pk i{background:var(--accent);border:1px solid var(--accent);}
+.fpile.pm i.grow{animation:addm 5.2s ease infinite;}
+.fpile.pk i.grow{animation:addk 5.2s ease infinite;}
+@keyframes addm{0%,28%{opacity:0;transform:translateY(-14px);}37%,100%{opacity:1;transform:translateY(0);}}
+@keyframes addk{0%,78%{opacity:0;transform:translateY(-14px);}87%,100%{opacity:1;transform:translateY(0);}}
 /* status chips (運用ルール) */
 .stflow{display:flex;gap:9px;align-items:center;margin-top:12px;flex-wrap:wrap;}
 .stflow .sarw{color:var(--ink-3);font-size:12px;}
@@ -155,8 +162,8 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .stag.yel{background:#F3E8C4;border:1px solid #C3A24A;color:#77622A;}
 .stag.grn{background:#DCE8DE;border:1px solid #6F9A7C;color:#3E6B4F;}
 @keyframes add{0%{opacity:0;transform:translateY(-16px);}22%{opacity:1;transform:translateY(0);}100%{opacity:1;transform:translateY(0);}}
-.fbox.db::after{content:"";position:absolute;inset:-1px;border-radius:13px;border:1.5px solid var(--accent);opacity:0;animation:ring 3.9s ease-in-out infinite;}
-@keyframes ring{0%,18%{opacity:0;transform:scale(1);}26%{opacity:.55;transform:scale(1.04);}45%{opacity:0;transform:scale(1.08);}100%{opacity:0;}}
+.fbox.db::after{content:"";position:absolute;inset:-1px;border-radius:13px;border:1.5px solid var(--accent);opacity:0;animation:ring 5.2s ease-in-out infinite;}
+@keyframes ring{0%,29%{opacity:0;transform:scale(1);}37%{opacity:.5;transform:scale(1.04);}47%{opacity:0;transform:scale(1.07);}79%{opacity:0;transform:scale(1);}87%{opacity:.5;transform:scale(1.04);}97%{opacity:0;transform:scale(1.07);}100%{opacity:0;}}
 /* 活きる: chips lighting */
 .fchips{display:flex;flex-direction:column;gap:5px;width:100%;}
 .fchips span{font-size:9.5px;font-weight:600;text-align:center;padding:3px 0;border-radius:5px;background:#fff;border:1px solid var(--line);color:var(--ink-3);}
@@ -203,7 +210,8 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
   .flow{gap:5px;}
   .fbox{width:86px;height:84px;padding:8px;border-radius:11px;}
   .fdoc{gap:5px;} .fdoc i{height:6px;}
-  .fstack i{width:50px;height:8px;}
+  .fpile i{width:27px;height:8px;}
+  .fstack{gap:7px;}
   .fchips{gap:4px;} .fchips span{font-size:8.5px;padding:2px 0;}
   .fseed{width:86px;}
   .flabel{font-size:10px;letter-spacing:.1em;}
@@ -238,12 +246,12 @@ footer a{color:var(--accent-deep);text-decoration:none;}
       <div class="flow">
         <div class="fstation">
           <div class="fseed"><span>マニュアル</span><span>ノウハウ</span></div>
-          <div class="fbox"><div class="fdoc"><i></i><i></i><i></i></div></div>
+          <div class="fbox"><div class="fdoc"><i></i><i></i><i></i><i></i></div></div>
           <div class="flabel">育てる</div>
         </div>
         <div class="fconn"><i></i><i></i><i></i></div>
         <div class="fstation">
-          <div class="fbox db"><div class="fstack"><i></i><i></i><i></i><i class="grow"></i></div></div>
+          <div class="fbox db"><div class="fstack"><div class="fpile pm"><i></i><i></i><i></i><i></i><i class="grow"></i></div><div class="fpile pk"><i></i><i></i><i></i><i class="grow"></i></div></div></div>
           <div class="flabel">積み上げる</div>
         </div>
         <div class="fconn"><i></i><i></i><i></i></div>
