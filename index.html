@@ -177,10 +177,11 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 /* 活きる: chips lighting */
 .fchips{display:flex;flex-direction:column;gap:5px;width:100%;}
 .fchips span{font-size:9px;font-weight:600;text-align:center;padding:3px 0;border-radius:5px;background:#fff;border:1px solid var(--line);color:var(--ink-3);}
-.fchips span:nth-child(1){animation:lit 3.9s ease infinite 1.4s;}
-.fchips span:nth-child(2){animation:lit 3.9s ease infinite 1.75s;}
-.fchips span:nth-child(3){animation:lit 3.9s ease infinite 2.1s;}
-@keyframes lit{0%,55%,100%{background:#fff;color:var(--ink-3);border-color:var(--line);}68%,88%{background:var(--accent-soft);color:var(--accent-deep);border-color:var(--accent);}}
+.fchips span:nth-child(1){animation:lit 4.5s ease infinite 0s;}
+.fchips span:nth-child(2){animation:lit 4.5s ease infinite 1.5s;}
+.fchips span:nth-child(3){animation:lit 4.5s ease infinite 3s;}
+/* 1つずつ順番に点灯→消灯（薬剤師→医療事務→新人OJT）。3分割で重ならないよう点灯窓は約1/3ずつ */
+@keyframes lit{0%,6%{background:#fff;color:var(--ink-3);border-color:var(--line);}14%,25%{background:var(--accent-soft);color:var(--accent-deep);border-color:var(--accent);}33%,100%{background:#fff;color:var(--ink-3);border-color:var(--line);}}
 /* connectors */
 .fconn{position:relative;width:40px;height:12px;flex-shrink:0;}
 .fconn i{position:absolute;top:4px;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:0;}
