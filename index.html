@@ -25,7 +25,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .wrap{max-width:760px;margin:0 auto;padding:0 28px;}
 
 /* header */
-header{position:relative;padding:52px 0 76px;text-align:center;overflow:hidden;}
+header{position:relative;padding:52px 0 36px;text-align:center;overflow:hidden;}
 header::before{content:"";position:absolute;top:-180px;left:50%;transform:translate(-50%, var(--orb,0px));width:680px;height:520px;
   background:radial-gradient(ellipse at center, rgba(216,138,92,.28) 0%, rgba(216,138,92,.10) 38%, rgba(216,138,92,0) 70%);
   pointer-events:none;z-index:0;filter:blur(6px);will-change:transform;}
@@ -195,7 +195,7 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 @keyframes loopdash{to{stroke-dashoffset:-10;}}
 .floop-label{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--accent-deep);opacity:.85;}
 @media(min-width:601px){
-  .flowwrap{transform:scale(1.2);transform-origin:top center;margin-bottom:46px;}
+  .flowwrap{transform:scale(1.2);transform-origin:top center;margin-bottom:24px;}
 }
 
 /* scroll reveal */
@@ -235,7 +235,7 @@ footer a{color:var(--accent-deep);text-decoration:none;}
 
 @media(max-width:600px){
   .wrap{padding:0 20px;}
-  header{padding:20px 0 40px;} h1{font-size:29px;}
+  header{padding:20px 0 12px;} h1{font-size:29px;}
   .kicker{margin-bottom:16px;}
   header::before{top:-120px;height:420px;}
   .lead{margin-top:16px;}
