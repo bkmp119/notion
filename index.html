@@ -153,17 +153,17 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .fstack{display:flex;flex-direction:column-reverse;gap:5px;align-items:center;justify-content:center;height:100%;}
 .fstack i{width:60px;height:9px;border-radius:3px;display:block;opacity:0;}
 .fstack i{background:var(--accent-soft);border:1px solid var(--accent);}
-.fstack i:nth-child(1){animation:stack1 5.2s ease infinite;}
-.fstack i:nth-child(2){animation:stack2 5.2s ease infinite;}
-.fstack i:nth-child(3){animation:stack3 5.2s ease infinite;}
-.fstack i:nth-child(4){animation:stack4 5.2s ease infinite;}
-.fstack i:nth-child(5){animation:stack5 5.2s ease infinite;}
-/* マニュアル着地(26%)後に3本、ノウハウ着地(76%)後に2本を積み上げ、末尾まで保持しループ先頭でリセット */
-@keyframes stack1{0%,24%{opacity:0;transform:translateY(-12px);}30%,100%{opacity:1;transform:none;}}
-@keyframes stack2{0%,32%{opacity:0;transform:translateY(-12px);}38%,100%{opacity:1;transform:none;}}
-@keyframes stack3{0%,40%{opacity:0;transform:translateY(-12px);}46%,100%{opacity:1;transform:none;}}
-@keyframes stack4{0%,74%{opacity:0;transform:translateY(-12px);}80%,100%{opacity:1;transform:none;}}
-@keyframes stack5{0%,82%{opacity:0;transform:translateY(-12px);}88%,100%{opacity:1;transform:none;}}
+.fstack i:nth-child(1){animation:stack1 15.6s ease infinite;}
+.fstack i:nth-child(2){animation:stack2 15.6s ease infinite;}
+.fstack i:nth-child(3){animation:stack3 15.6s ease infinite;}
+.fstack i:nth-child(4){animation:stack4 15.6s ease infinite;}
+.fstack i:nth-child(5){animation:stack5 15.6s ease infinite;}
+/* タグ流入(2.6秒ごとにM/K交互)に合わせ1本ずつ積み上げ。M,K,M,K,Mの5回で5本→満杯保持→リセット（15.6秒周期・常にマニュアル始まり） */
+@keyframes stack1{0%,9%{opacity:0;transform:translateY(-12px);}11%,100%{opacity:1;transform:none;}}
+@keyframes stack2{0%,25%{opacity:0;transform:translateY(-12px);}27%,100%{opacity:1;transform:none;}}
+@keyframes stack3{0%,42%{opacity:0;transform:translateY(-12px);}44%,100%{opacity:1;transform:none;}}
+@keyframes stack4{0%,59%{opacity:0;transform:translateY(-12px);}61%,100%{opacity:1;transform:none;}}
+@keyframes stack5{0%,75%{opacity:0;transform:translateY(-12px);}77%,100%{opacity:1;transform:none;}}
 /* status chips (運用ルール) */
 .stflow{display:flex;gap:9px;align-items:center;margin-top:12px;flex-wrap:wrap;}
 .stflow .sarw{color:var(--ink-3);font-size:12px;}
@@ -173,7 +173,7 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .stag.grn{background:#DCE8DE;border:1px solid #6F9A7C;color:#3E6B4F;}
 @keyframes add{0%{opacity:0;transform:translateY(-16px);}22%{opacity:1;transform:translateY(0);}100%{opacity:1;transform:translateY(0);}}
 .fbox.db::after{content:"";position:absolute;inset:-1px;border-radius:13px;border:1.5px solid var(--accent);opacity:0;animation:ring 5.2s ease-in-out infinite;}
-@keyframes ring{0%,44%{opacity:0;transform:scale(1);}51%{opacity:.5;transform:scale(1.04);}60%{opacity:0;transform:scale(1.07);}94%{opacity:0;transform:scale(1);}99%{opacity:.5;transform:scale(1.04);}100%{opacity:0;}}
+@keyframes ring{0%,22%{opacity:0;transform:scale(1);}28%{opacity:.5;transform:scale(1.04);}38%{opacity:0;transform:scale(1.07);}72%{opacity:0;transform:scale(1);}78%{opacity:.5;transform:scale(1.04);}88%{opacity:0;transform:scale(1.07);}100%{opacity:0;transform:scale(1);}}
 /* 活きる: chips lighting */
 .fchips{display:flex;flex-direction:column;gap:5px;width:100%;}
 .fchips span{font-size:9px;font-weight:600;text-align:center;padding:3px 0;border-radius:5px;background:#fff;border:1px solid var(--line);color:var(--ink-3);}
