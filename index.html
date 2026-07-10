@@ -139,10 +139,10 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 /* 書く: typing doc */
 .fdoc{width:100%;display:flex;flex-direction:column;gap:7px;}
 .fdoc i{height:7px;border-radius:2px;background:var(--line);display:block;}
-.fdoc i:nth-child(1){width:80%;animation:type 3.9s ease infinite;}
-.fdoc i:nth-child(2){width:100%;animation:type 3.9s ease infinite .5s;}
-.fdoc i:nth-child(3){width:60%;animation:type 3.9s ease infinite 1s;}
-@keyframes type{0%,100%{background:var(--line);}30%,55%{background:var(--accent);}}
+.fdoc i:nth-child(1){width:80%;animation:type 5.2s ease infinite;}
+.fdoc i:nth-child(2){width:100%;animation:type 5.2s ease infinite .12s;}
+.fdoc i:nth-child(3){width:60%;animation:type 5.2s ease infinite .24s;}
+@keyframes type{0%,27%{background:var(--accent);}34%,77%{background:#E5BFA2;}84%,100%{background:var(--accent);}}
 /* 貯まる: accumulating stack */
 .fstack{display:flex;flex-direction:column-reverse;gap:4px;align-items:center;}
 .fstack i{width:62px;height:9px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--accent);display:block;}
