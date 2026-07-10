@@ -183,7 +183,7 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .fconn i:nth-child(3){animation:travel 1.95s linear infinite 1.3s;}
 @keyframes travel{0%{left:0;opacity:0;}25%{opacity:1;}75%{opacity:1;}100%{left:36px;opacity:0;}}
 /* return loop: 活用する → 育てる */
-.floop{position:absolute;left:24px;right:24px;bottom:16px;height:34px;overflow:visible;}
+.floop{position:absolute;left:0;right:0;width:100%;bottom:16px;height:34px;overflow:visible;}
 .floop path{fill:none;stroke:var(--accent);stroke-width:1.3;stroke-dasharray:4 6;stroke-linecap:round;opacity:.65;animation:loopdash 1.6s linear infinite;}
 .floop .fl-arrow{fill:var(--accent);stroke:none;opacity:.8;animation:none;}
 @keyframes loopdash{to{stroke-dashoffset:-10;}}
@@ -265,8 +265,8 @@ footer a{color:var(--accent-deep);text-decoration:none;}
         </div>
       </div>
       <svg class="floop" viewBox="0 0 300 34" preserveAspectRatio="none">
-        <path d="M292 6 C 246 32, 54 32, 10 6"/>
-        <path class="fl-arrow" d="M10 6 L17 9.5 L16 2.5 Z"/>
+        <path d="M264 6 C 230 34, 70 34, 36 6"/>
+        <path class="fl-arrow" d="M36 6 L43 9.5 L42 2.5 Z"/>
       </svg>
       <div class="floop-label">更新して、また育てる</div>
     </div>
