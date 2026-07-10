@@ -188,8 +188,17 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
   .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 @media(max-width:600px){
-  .flowwrap{transform:scale(.86);transform-origin:top center;}
-  .flow{gap:4px;}
+  .flowwrap{max-width:100%;}
+  .flow{gap:5px;}
+  .fbox{width:80px;height:62px;padding:8px;border-radius:11px;}
+  .fdoc{gap:5px;} .fdoc i{height:6px;}
+  .fstack i{width:50px;height:8px;}
+  .fchips{gap:4px;} .fchips span{font-size:8.5px;padding:2px 0;}
+  .fseed{width:80px;}
+  .flabel{font-size:10px;letter-spacing:.1em;}
+  .fconn{width:26px;}
+  @keyframes travel{0%{left:0;opacity:0;}25%{opacity:1;}75%{opacity:1;}100%{left:22px;opacity:0;}}
+  .floop{left:16px;right:16px;}
 }
 
 footer{text-align:center;font-size:12px;color:var(--ink-3);padding:56px 0 72px;letter-spacing:.02em;}
