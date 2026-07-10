@@ -183,8 +183,7 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
 .gz-fill{height:100%;background:var(--accent);border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.2,.75,.2,1);}
 
 @media(prefers-reduced-motion:reduce){
-  .fdoc i,.fstack i.grow,.fbox.db::after,.fchips span,.fconn i,.fseed span,.floop path{animation:none !important;}
-  .fseed span:nth-child(1){opacity:.9;transform:none;}
+  /* 循環図（fdoc/fstack/fchips/fconn/fseed/floop）は小さな装飾のため常時アニメーション */
   .fconn i{opacity:.6;}
   .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
 }
