@@ -25,7 +25,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .wrap{max-width:760px;margin:0 auto;padding:0 28px;}
 
 /* header */
-header{position:relative;padding:52px 0 36px;text-align:center;overflow:hidden;}
+header{position:relative;padding:34px 0 26px;text-align:center;overflow:hidden;}
 header::before{content:"";position:absolute;top:-180px;left:50%;transform:translate(-50%, var(--orb,0px));width:680px;height:520px;
   background:radial-gradient(ellipse at center, rgba(216,138,92,.28) 0%, rgba(216,138,92,.10) 38%, rgba(216,138,92,0) 70%);
   pointer-events:none;z-index:0;filter:blur(6px);will-change:transform;}
@@ -48,16 +48,16 @@ nav a.active{color:var(--accent-deep);background:var(--accent-soft);border-color
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-deep));z-index:60;transition:width .12s linear;}
 
 /* section */
-section{padding:80px 0;border-top:1px solid var(--line-2);}
-section:first-of-type{border-top:none;padding-top:24px;}
-.head{margin-bottom:44px;}
+section{padding:52px 0;border-top:1px solid var(--line-2);}
+section:first-of-type{border-top:none;padding-top:20px;}
+.head{margin-bottom:28px;}
 .num{display:inline-flex;align-items:center;gap:9px;font-family:'Noto Serif JP',serif;font-size:13px;font-weight:500;color:var(--accent);letter-spacing:.24em;margin-bottom:16px;}
 .num::before{content:"/";font-weight:600;opacity:.55;}
 .head h2{font-family:'Noto Serif JP',serif;font-size:31px;font-weight:600;color:var(--ink);letter-spacing:-.005em;line-height:1.4;}
 .head .sub{font-size:13.5px;color:var(--ink-3);margin-top:11px;}
 
 /* card */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 38px;margin-bottom:16px;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin-bottom:14px;}
 .card h3{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:.01em;}
 .card p{font-size:14.5px;color:var(--ink-2);margin-bottom:12px;}
 .card p:last-child{margin-bottom:0;}
@@ -237,7 +237,7 @@ a.db:hover{border-color:var(--accent);transform:translateY(-1px);}
   .floop{left:16px;right:16px;}
 }
 
-footer{text-align:center;font-size:12px;color:var(--ink-3);padding:56px 0 72px;letter-spacing:.02em;}
+footer{text-align:center;font-size:12px;color:var(--ink-3);padding:40px 0 52px;letter-spacing:.02em;}
 footer a{color:var(--accent-deep);text-decoration:none;}
 
 @media(max-width:600px){
@@ -246,9 +246,10 @@ footer a{color:var(--accent-deep);text-decoration:none;}
   .kicker{margin-bottom:16px;}
   header::before{top:-120px;height:420px;}
   .lead{margin-top:9px;font-size:13.5px;line-height:1.65;}
-  .flowwrap{margin-top:10px;padding-top:34px;}
-  section{padding:56px 0;} .head h2{font-size:24px;}
-  .card{padding:26px 24px;} .map-row{grid-template-columns:1fr;}
+  .flowwrap{margin-top:8px;padding-top:32px;padding-bottom:40px;}
+  section{padding:38px 0;} .head h2{font-size:23px;} .head{margin-bottom:20px;}
+  .card{padding:20px 20px;margin-bottom:12px;} .map-row{grid-template-columns:1fr;}
+  footer{padding:32px 0 40px;}
 }
 </style>
 </head>
